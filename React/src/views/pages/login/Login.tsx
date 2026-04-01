@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
-import './Login.css'
 
 function Login() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -40,9 +39,9 @@ function Login() {
       <section id="center">
         <h1>Login</h1>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
+        <form className="flex flex-col gap-5 w-full max-w-[360px]" onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-1.5 text-left">
+            <label htmlFor="username" className="text-sm text-[var(--text-h)]">Username</label>
             <input
               id="username"
               type="text"
@@ -50,11 +49,12 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
+              className="px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="flex flex-col gap-1.5 text-left">
+            <label htmlFor="password" className="text-sm text-[var(--text-h)]">Password</label>
             <input
               id="password"
               type="password"
@@ -62,10 +62,11 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
+              className="px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60"
             />
           </div>
 
-          {error && <p className="error">{error}</p>}
+          {error && <p className="text-red-500 text-sm m-0">{error}</p>}
 
           <button className="counter" type="submit">
             Login
