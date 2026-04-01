@@ -2,16 +2,10 @@ import reactLogo from '@/assets/react.svg'
 import viteLogo from '@/assets/vite.svg'
 import heroImg from '@/assets/hero.png'
 import IoC from '@/ioc'
-import {
-  type IAuthService,
-  type ICatsService,
-  SERVICES,
-  type User
-} from '@/types'
+import { type ICatsService, SERVICES } from '@/types'
 import './Cats.css'
 
 function Cats() {
-  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
   const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
 
   const cats = catsService.getCats()
@@ -22,15 +16,6 @@ function Cats() {
 
   function removeCat() {
     catsService.removeCat()
-  }
-
-  function changeName() {
-    const data: User = {
-      name: 'Updated Name',
-      role: 'admin'
-    }
-
-    authService.setUser(data)
   }
 
   return (
@@ -50,9 +35,6 @@ function Cats() {
         </button>
         <button className="counter" onClick={() => removeCat()}>
           Remove Cat
-        </button>
-        <button className="counter" onClick={() => changeName()}>
-          Change name
         </button>
       </section>
 

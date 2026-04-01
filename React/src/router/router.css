@@ -3,3 +3,8 @@
   justify-content: center;
   gap: 16px;
 }
+
+.router-nav a.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
