@@ -68,7 +68,10 @@ function Login() {
 
           {error && <p className="text-red-500 text-sm m-0">{error}</p>}
 
-          <button className="counter" type="submit">
+          <button
+            type="submit"
+            className="px-4 py-2 bg-[var(--accent)] text-white border-none rounded-md cursor-pointer font-[var(--mono)] text-base transition-colors duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
+          >
             Login
           </button>
         </form>

@@ -39,10 +39,16 @@ function Cats() {
         <span>
           {catsService.userName()} has {cats} {cats !== 1 ? 'cats' : 'cat'}
         </span>
-        <button className="counter" onClick={() => addCat()}>
+        <button
+          className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+          onClick={() => addCat()}
+        >
           Add Cat
         </button>
-        <button className="counter" onClick={() => removeCat()}>
+        <button
+          className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+          onClick={() => removeCat()}
+        >
           Remove Cat
         </button>
       </section>
