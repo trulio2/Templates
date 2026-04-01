@@ -18,7 +18,7 @@ class AuthService implements IAuthService {
     if (username && password) {
       const user: User = {
         name: username,
-        role: username === 'admin' ? 'admin' : 'user'
+        role: 'admin'
       }
 
       this.setUser(user)
