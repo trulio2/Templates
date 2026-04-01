@@ -8,6 +8,7 @@ import IoC from '@/ioc'
 import { SERVICES, type IAuthService, type User } from '@/types'
 import './router.css'
 
+import Admin from '@/views/pages/admin/Admin'
 import Cats from '@/views/pages/cats/Cats'
 import Home from '@/views/pages/home/Home'
 import Login from '@/views/pages/login/Login'
@@ -99,7 +100,7 @@ export const router = createBrowserRouter([
 
       {
         element: <RequireRole role="admin" />,
-        children: [{ path: 'admin', element: <div>Admin Panel</div> }]
+        children: [{ path: 'admin', element: <Admin /> }]
       }
     ]
   }
