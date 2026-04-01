@@ -12,7 +12,7 @@ function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault()
     setError('')
 
@@ -46,6 +46,7 @@ function Login() {
             <input
               id="username"
               type="text"
+              autoComplete="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter username"
@@ -57,6 +58,7 @@ function Login() {
             <input
               id="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
