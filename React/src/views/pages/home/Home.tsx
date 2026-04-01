@@ -1,6 +1,5 @@
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
-import './Home.css'
 
 function Home() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
