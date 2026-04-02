@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet
-} from 'react-router-dom'
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
 import { SERVICES, type IAuthService, type User } from '@/types'
 import './router.css'

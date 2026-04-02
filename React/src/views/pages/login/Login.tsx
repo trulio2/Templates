@@ -39,9 +39,14 @@ function Login() {
       <section id="center">
         <h1>Login</h1>
 
-        <form className="flex flex-col gap-5 w-full max-w-[360px]" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col gap-5 w-full max-w-[360px]"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="username" className="text-sm text-[var(--text-h)]">Username</label>
+            <label htmlFor="username" className="text-sm text-[var(--text-h)]">
+              Username
+            </label>
             <input
               id="username"
               type="text"
@@ -54,7 +59,9 @@ function Login() {
           </div>
 
           <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="password" className="text-sm text-[var(--text-h)]">Password</label>
+            <label htmlFor="password" className="text-sm text-[var(--text-h)]">
+              Password
+            </label>
             <input
               id="password"
               type="password"
