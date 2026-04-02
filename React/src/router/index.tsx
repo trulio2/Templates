@@ -1,6 +1,5 @@
 import {
   createBrowserRouter,
-  NavLink,
   Navigate,
   Outlet
 } from 'react-router-dom'
@@ -12,6 +11,7 @@ import Admin from '@/views/pages/admin/Admin'
 import Cats from '@/views/pages/cats/Cats'
 import Home from '@/views/pages/home/Home'
 import Login from '@/views/pages/login/Login'
+import Sidebar from './Sidebar'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 
@@ -19,30 +19,14 @@ function getUser(): User | null {
   return authService.getUser()
 }
 
-function logout() {
-  authService.logout()
-}
-
 function RootLayout() {
-  const user = getUser()
-
   return (
-    <div>
-      <div className="router-nav">
-        <NavLink to="/">Home</NavLink>
+    <div className="flex min-h-screen">
+      <Sidebar />
 
-        {user && <NavLink to="/cats">Cats</NavLink>}
-
-        {user?.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
-
-        {!user && <NavLink to="/login">Login</NavLink>}
-
-        {user && <button onClick={() => logout()}>Logout</button>}
-
-        <span>{user?.name}</span>
-      </div>
-
-      <Outlet />
+      <main className="flex-1 ml-64">
+        <Outlet />
+      </main>
     </div>
   )
 }
