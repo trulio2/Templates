@@ -1,4 +1,5 @@
 export * from './auth.types'
 export * from './cats.type'
+export * from './locale.types'
 export * from './services.type'
 export * from './user.type'

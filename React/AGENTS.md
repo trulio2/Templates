@@ -6,7 +6,7 @@ Repository guide for agentic coding in this React template.
 - This repo is a Vite + React + TypeScript template.
 - Source lives in `src/`.
 - Path alias `@/*` maps to `src/*`.
-- Current stack: React 19, React Router 7, Zustand, TypeScript, ESLint 9.
+- Current stack: React 19, React Router 7, Zustand, Tailwind CSS 4, TypeScript, ESLint 9.
 
 ## Tooling
 - Package manager: `yarn` is the expected choice here because `yarn.lock` is present.
@@ -40,14 +40,53 @@ Repository guide for agentic coding in this React template.
 - Current baseline lint failures are in `src/ioc/index.ts` (`no-explicit-any`) and
   `src/router/index.tsx` (`react-refresh/only-export-components`).
 
+## Features
+
+### Authentication & Authorization
+- **AuthStore** (`src/modules/auth/auth.store.ts`): Zustand store with `persist` middleware, stores auth state to `auth-storage` in localStorage
+- **AuthService** (`src/modules/auth/auth.service.ts`): Simple mock auth - accepts any username/password, creates admin user
+- **Role-based access control**: Routes support role-based guards (e.g., `RequireRole("admin")`)
+
+### Pages & Routes
+| Route | Component | Guard | Purpose |
+|-------|-----------|-------|---------|
+| `/` | `Home` | None | Welcome message, shows user name if logged in |
+| `/login` | `Login` | `RequireGuest` | Login form, redirects if already logged in |
+| `/cats` | `Cats` | `RequireAuth` | Increment/decrement cat counter |
+| `/admin` | `Admin` | `RequireRole("admin")` | Admin-only page with counter demo |
+
+### Route Guards (`src/router/index.tsx`)
+- `RequireAuth`: Redirects to `/login` if no user
+- `RequireGuest`: Redirects to `/` if already logged in
+- `RequireRole({ role })`: Checks user role before access
+- All guards use the `Outlet` pattern for nested rendering
+
+### Layout
+- `RootLayout` (`src/router/index.tsx`): Provides sidebar navigation + Outlet
+- `Sidebar` (`src/router/Sidebar.tsx`): Collapsible navigation with active link styling
+
+### Service-Store Architecture
+- **Stores**: Zustand stores for state management, live alongside their feature module
+- **Services**: Business logic wrappers around stores, implement typed interfaces
+- **IoC Container** (`src/ioc/index.ts`): Singleton pattern for lazy service instantiation and DI
+- Service interfaces: `IAuthService`, `ICatsService`
+- `CatsService` demonstrates constructor DI by receiving `IAuthService`
+
+### Barrel Exports
+Each feature module uses barrel exports via `index.ts`:
+- `src/modules/index.ts` - exports all modules
+- `src/modules/auth/index.ts` - exports auth module
+- `src/modules/cats/index.ts` - exports cats module
+- `src/types/index.ts` - exports all shared types
+
 ## File Organization
 - Keep feature code grouped by domain, as the repo already does.
 - Current top-level source areas:
-  - `src/router/`
-  - `src/views/pages/`
-  - `src/modules/`
-  - `src/types/`
-  - `src/ioc/`
+  - `src/router/` - routing config, sidebar, layout guards
+  - `src/views/pages/` - page components (Home, Login, Cats, Admin)
+  - `src/modules/` - feature modules with stores and services
+  - `src/types/` - shared TypeScript interfaces and types
+  - `src/ioc/` - inversion of control container
 - Add new code beside the closest related feature, not in a catch-all folder.
 
 ## Imports
@@ -70,6 +109,13 @@ Repository guide for agentic coding in this React template.
 - Keep parameter and return types explicit on public APIs.
 - Avoid `any` unless you are constrained by existing code and cannot improve it safely.
 - Prefer `null` over `undefined` where the repo already uses `null` for absence.
+
+### Key Types
+```typescript
+interface User { name: string; role: string }
+interface IAuthService { getUser(): User | null; setUser(data: User): void; login(username: string, password: string): boolean; logout(): void }
+interface ICatsService { getCats(): number; addCat(): void; removeCat(): void; userName(): string }
+```
 
 ## Naming
 - Components use PascalCase file names and default exports, e.g. `Home.tsx`.
@@ -115,11 +161,14 @@ Repository guide for agentic coding in this React template.
 - Keep line breaks consistent with the current files.
 
 ## CSS
-- Component styles live next to the component, e.g. `Home.css`.
-- Global styles live in `src/index.css`.
-- Use the existing CSS variable system when possible.
-- Keep class names descriptive and feature-scoped.
-- Preserve existing responsive patterns and layout structure.
+- **Tailwind CSS v4** is the primary styling approach (via `@tailwindcss/vite` plugin)
+- **CSS Variables** for theming with light/dark mode support (`@media (prefers-color-scheme: dark)`)
+- Global variables: `--text`, `--text-h`, `--bg`, `--border`, `--accent`, `--accent-bg`, `--sans`, `--heading`, `--mono`
+- Component styles live next to the component
+- Global styles live in `src/index.css`
+- Router-specific styles in `src/router/router.css`
+- Keep class names descriptive and feature-scoped
+- Preserve existing responsive patterns and layout structure
 
 ## Editing Discipline
 - Make the smallest change that correctly solves the task.

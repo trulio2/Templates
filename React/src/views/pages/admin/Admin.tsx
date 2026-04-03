@@ -2,10 +2,13 @@ import { useState } from 'react'
 import reactLogo from '@/assets/react.svg'
 import viteLogo from '@/assets/vite.svg'
 import heroImg from '@/assets/hero.png'
+import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 
 function Admin() {
+  const { t } = useTranslation()
+
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 
   const [count, setCount] = useState(0)
@@ -43,13 +46,13 @@ function Admin() {
         </div>
         <div></div>
         <button className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2">
-          User name is {user?.name}
+          {t('pages.admin.userName', { name: user?.name ?? '' })}
         </button>
         <button
           className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
           onClick={() => setCount(count + 1)}
         >
-          Count {count}
+          {t('pages.admin.count', { count })}
         </button>
       </section>
 

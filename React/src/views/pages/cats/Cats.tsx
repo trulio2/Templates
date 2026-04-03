@@ -1,10 +1,13 @@
 import reactLogo from '@/assets/react.svg'
 import viteLogo from '@/assets/vite.svg'
 import heroImg from '@/assets/hero.png'
+import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
 import { type ICatsService, SERVICES } from '@/types'
 
 function Cats() {
+  const { t } = useTranslation()
+
   const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
 
   const cats = catsService.getCats()
@@ -49,19 +52,22 @@ function Cats() {
         </div>
         <div></div>
         <span>
-          {catsService.userName()} has {cats} {cats !== 1 ? 'cats' : 'cat'}
+          {t('pages.cats.hasCats', {
+            name: catsService.userName(),
+            count: cats
+          })}
         </span>
         <button
           className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
           onClick={() => addCat()}
         >
-          Add Cat
+          {t('pages.cats.addCat')}
         </button>
         <button
           className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
           onClick={() => removeCat()}
         >
-          Remove Cat
+          {t('pages.cats.removeCat')}
         </button>
       </section>
 

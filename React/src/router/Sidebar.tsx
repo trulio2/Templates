@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
 import { SERVICES, type IAuthService, type User } from '@/types'
 
@@ -14,6 +15,8 @@ function logout() {
 }
 
 export default function Sidebar() {
+  const { t } = useTranslation()
+
   const user = getUser()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -40,9 +43,9 @@ export default function Sidebar() {
                 : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
             } ${collapsed ? 'text-center' : ''}`
           }
-          title={collapsed ? 'Home' : undefined}
+          title={collapsed ? t('nav.home') : undefined}
         >
-          {collapsed ? '🏠' : 'Home'}
+          {collapsed ? '🏠' : t('nav.home')}
         </NavLink>
 
         {user && (
@@ -55,9 +58,9 @@ export default function Sidebar() {
                   : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
               } ${collapsed ? 'text-center' : ''}`
             }
-            title={collapsed ? 'Cats' : undefined}
+            title={collapsed ? t('nav.cats') : undefined}
           >
-            {collapsed ? '🐱' : 'Cats'}
+            {collapsed ? '🐱' : t('nav.cats')}
           </NavLink>
         )}
 
@@ -71,9 +74,9 @@ export default function Sidebar() {
                   : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
               } ${collapsed ? 'text-center' : ''}`
             }
-            title={collapsed ? 'Admin' : undefined}
+            title={collapsed ? t('nav.admin') : undefined}
           >
-            {collapsed ? '⚙️' : 'Admin'}
+            {collapsed ? '⚙️' : t('nav.admin')}
           </NavLink>
         )}
 
@@ -87,9 +90,9 @@ export default function Sidebar() {
                   : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
               } ${collapsed ? 'text-center' : ''}`
             }
-            title={collapsed ? 'Login' : undefined}
+            title={collapsed ? t('nav.login') : undefined}
           >
-            {collapsed ? '🔑' : 'Login'}
+            {collapsed ? '🔑' : t('nav.login')}
           </NavLink>
         )}
       </nav>
@@ -100,7 +103,7 @@ export default function Sidebar() {
             <button
               onClick={() => logout()}
               className="w-full text-center text-lg"
-              title="Logout"
+              title={t('nav.logout')}
             >
               🚪
             </button>
@@ -111,7 +114,7 @@ export default function Sidebar() {
                 onClick={() => logout()}
                 className="text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm text-left"
               >
-                Logout
+                {t('nav.logout')}
               </button>
             </div>
           )}

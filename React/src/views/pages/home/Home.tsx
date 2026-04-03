@@ -1,15 +1,23 @@
+import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 
 function Home() {
+  const { t } = useTranslation()
+
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+
   const user = authService.getUser()
 
   return (
     <>
       <section id="center">
-        <h1>Welcome</h1>
-        <p>{user ? `Hello, ${user.name}!` : 'Please log in to continue.'}</p>
+        <h1>{t('pages.home.welcome')}</h1>
+        <p>
+          {user
+            ? t('pages.home.greeting', { name: user.name })
+            : t('pages.home.pleaseLogin')}
+        </p>
       </section>
 
       <div className="ticks"></div>
