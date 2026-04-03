@@ -43,7 +43,13 @@ export interface ITranslations {
 
 export type Locale = 'en' | 'pt'
 
+export interface IGetLocaleHook {
+  locale: Locale
+  t: any
+}
+
 export interface ILocaleService {
+  getLocaleHook(): IGetLocaleHook
   getLocale(): string
   setLocale(newLocale: Locale): void
 }

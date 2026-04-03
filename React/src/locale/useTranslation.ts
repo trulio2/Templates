@@ -1,8 +1,10 @@
-import { localeStore } from '@/modules'
+import IoC from '@/ioc'
+import { SERVICES, type ILocaleService } from '@/types'
+
+const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
 export default function useTranslation() {
-  const locale = localeStore((s) => s.locale)
-  const t = localeStore((s) => s.t)
+  const { locale, t } = localeService.getLocaleHook()
 
   return { t, locale }
 }
