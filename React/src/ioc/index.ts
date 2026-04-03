@@ -1,4 +1,4 @@
-import { AuthService, CatsService } from '@/modules'
+import { AuthService, CatsService, LocaleService } from '@/modules'
 import { type IAuthService, SERVICES } from '@/types'
 
 class IoC {
@@ -17,8 +17,11 @@ class IoC {
         break
       case SERVICES.CATS:
         newInstance = new CatsService(
-          this.getOrCreateInstance<IAuthService>('AuthService')
+          this.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
         )
+        break
+      case SERVICES.LOCALE:
+        newInstance = new LocaleService()
         break
       default:
         break

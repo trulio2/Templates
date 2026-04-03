@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { localeStore } from './locale.store'
+import { localeStore } from '@/modules'
 
 export default function useTranslation() {
   const t = localeStore((s) => s.t)

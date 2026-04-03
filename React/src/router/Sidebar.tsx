@@ -2,9 +2,16 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
-import { SERVICES, type IAuthService, type User } from '@/types'
+import {
+  SERVICES,
+  type IAuthService,
+  type ILocaleService,
+  type Locale,
+  type User
+} from '@/types'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
 function getUser(): User | null {
   return authService.getUser()
@@ -17,8 +24,14 @@ function logout() {
 export default function Sidebar() {
   const { t } = useTranslation()
 
-  const user = getUser()
   const [collapsed, setCollapsed] = useState(false)
+
+  const user = getUser()
+  const locale = localeService.getLocale()
+
+  function setLocale(newLocale: Locale) {
+    localeService.setLocale(newLocale)
+  }
 
   return (
     <aside
@@ -97,8 +110,23 @@ export default function Sidebar() {
         )}
       </nav>
 
+      <div className="absolute bottom-4 left-0 right-0 px-4">
+        {collapsed ? (
+          <div className="text-center text-sm">{locale}</div>
+        ) : (
+          <select
+            value={locale}
+            onChange={(e) => setLocale(e.target.value as 'en' | 'pt')}
+            className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
+          >
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+          </select>
+        )}
+      </div>
+
       {user && (
-        <div className="absolute bottom-4 left-0 right-0 px-4">
+        <div className="absolute bottom-14 left-0 right-0 px-4">
           {collapsed ? (
             <button
               onClick={() => logout()}

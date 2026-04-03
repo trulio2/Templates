@@ -1,9 +1,8 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { en } from '@/locale/en'
 import { pt } from '@/locale/pt'
-import type { ITranslations } from '@/types'
-
-type Locale = 'en' | 'pt'
+import { type ITranslations, type Locale, type LocaleState } from '@/types'
 
 const locales: Record<Locale, ITranslations> = { en, pt }
 
@@ -33,22 +32,23 @@ function resolve(translations: ITranslations, path: string): string | null {
   return typeof current === 'string' ? current : null
 }
 
-interface LocaleState {
-  locale: Locale
-  translations: ITranslations
-  setLocale: (locale: Locale) => void
-  t: (key: string, values?: Record<string, unknown>) => string
-}
+export const localeStore = create<LocaleState>()(
+  persist(
+    (set, get) => ({
+      locale: 'en',
+      translations: en,
+      setLocale: (locale) => set({ locale, translations: locales[locale] }),
+      t: (key, values = {}) => {
+        const message = resolve(get().translations, key)
+        if (!message) return key
+        return interpolate(message, values)
+      }
+    }),
+    {
+      name: 'locale-storage'
+    }
+  )
+)
 
-export const localeStore = create<LocaleState>((set, get) => ({
-  locale: 'en',
-  translations: en,
-  setLocale: (locale) => set({ locale, translations: locales[locale] }),
-  t: (key, values = {}) => {
-    const message = resolve(get().translations, key)
-    if (!message) return key
-    return interpolate(message, values)
-  }
-}))
-
-export const t = (key: string, values?: Record<string, unknown>) => localeStore.getState().t(key, values)
+export const t = (key: string, values?: Record<string, unknown>) =>
+  localeStore.getState().t(key, values)

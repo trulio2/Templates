@@ -1,4 +1,5 @@
 export const SERVICES = {
   AUTH: 'AuthService',
-  CATS: 'CatsService'
+  CATS: 'CatsService',
+  LOCALE: 'LocaleService'
 }

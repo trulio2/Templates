@@ -40,3 +40,17 @@ export interface ITranslations {
   pages: IPages
   nav: INav
 }
+
+export type Locale = 'en' | 'pt'
+
+export interface ILocaleService {
+  getLocale(): string
+  setLocale(newLocale: Locale): void
+}
+
+export interface LocaleState {
+  locale: Locale
+  translations: ITranslations
+  setLocale: (locale: Locale) => void
+  t: (key: string, values?: Record<string, unknown>) => string
+}
