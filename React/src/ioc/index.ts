@@ -1,4 +1,9 @@
-import { AuthService, CatsService, LocaleService } from '@/modules'
+import {
+  AuthService,
+  CatsService,
+  LocaleService,
+  ThemeService
+} from '@/modules'
 import { type IAuthService, SERVICES } from '@/types'
 
 class IoC {
@@ -22,6 +27,9 @@ class IoC {
         break
       case SERVICES.LOCALE:
         newInstance = new LocaleService()
+        break
+      case SERVICES.THEME:
+        newInstance = new ThemeService()
         break
       default:
         break

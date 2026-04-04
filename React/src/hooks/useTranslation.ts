@@ -3,7 +3,7 @@ import { SERVICES, type ILocaleService } from '@/types'
 
 const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
-export default function useTranslation() {
+export function useTranslation() {
   const { t } = localeService.getHook()
 
   return { t }

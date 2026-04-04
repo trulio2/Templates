@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useTranslation } from '@/locale'
 import IoC from '@/ioc'
+import { useTranslation, useTheme } from '@/hooks'
 import {
   SERVICES,
   type IAuthService,
   type ILocaleService,
   type Locale,
+  type Theme,
   type User
 } from '@/types'
 
@@ -23,6 +24,7 @@ function logout() {
 
 export default function Sidebar() {
   const { t } = useTranslation()
+  const { theme, setTheme } = useTheme()
 
   const [collapsed, setCollapsed] = useState(false)
 
@@ -110,18 +112,28 @@ export default function Sidebar() {
         )}
       </nav>
 
-      <div className="absolute bottom-4 left-0 right-0 px-4">
+      <div className="absolute bottom-4 left-0 right-0 px-4 flex flex-col gap-2">
         {collapsed ? (
           <div className="text-center text-sm">{locale}</div>
         ) : (
-          <select
-            value={locale}
-            onChange={(e) => setLocale(e.target.value as 'en' | 'pt')}
-            className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
-          >
-            <option value="en">English</option>
-            <option value="pt">Português</option>
-          </select>
+          <>
+            <select
+              value={locale}
+              onChange={(e) => setLocale(e.target.value as Locale)}
+              className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
+            >
+              <option value="en">English</option>
+              <option value="pt">Português</option>
+            </select>
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value as Theme)}
+              className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
+            >
+              <option value="light">{t('theme.light')}</option>
+              <option value="dark">{t('theme.dark')}</option>
+            </select>
+          </>
         )}
       </div>
 

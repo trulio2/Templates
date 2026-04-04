@@ -1,4 +1,4 @@
-import { type IGetLocaleHook, type ILocaleService, type Locale } from '@/types'
+import type { IGetLocaleHook, ILocaleService, Locale } from '@/types'
 import { localeStore } from './locale.store'
 
 class LocaleService implements ILocaleService {

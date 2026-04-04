@@ -1,4 +1,4 @@
-import { useTranslation } from '@/locale'
+import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 

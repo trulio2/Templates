@@ -39,6 +39,10 @@ interface INav {
 export interface ITranslations {
   pages: IPages
   nav: INav
+  theme: {
+    light: string
+    dark: string
+  }
 }
 
 export type T = (key: string, values?: Record<string, unknown>) => string

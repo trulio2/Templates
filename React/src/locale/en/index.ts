@@ -36,5 +36,9 @@ export const en: ITranslations = {
     admin: 'Admin',
     login: 'Login',
     logout: 'Logout'
+  },
+  theme: {
+    light: 'Light',
+    dark: 'Dark'
   }
 }
