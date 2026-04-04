@@ -22,6 +22,7 @@ class CatsService implements ICatsService {
 
   public userName(): string {
     const user = this.authService.getUser()
+
     return user?.name || ''
   }
 }
