@@ -11,8 +11,6 @@ class BitmexService implements IBitmexService {
   public setTrade(newTrade: ITrade): void {
     const { setTrade } = bitmexStore.getState()
 
-    console.log(newTrade)
-
     setTrade(newTrade)
   }
 
