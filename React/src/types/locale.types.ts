@@ -41,15 +41,17 @@ export interface ITranslations {
   nav: INav
 }
 
+export type T = (key: string, values?: Record<string, unknown>) => string
+
 export type Locale = 'en' | 'pt'
 
 export interface IGetLocaleHook {
   locale: Locale
-  t: any
+  t: T
 }
 
 export interface ILocaleService {
-  getLocaleHook(): IGetLocaleHook
+  getHook(): IGetLocaleHook
   getLocale(): string
   setLocale(newLocale: Locale): void
 }
@@ -58,5 +60,5 @@ export interface LocaleState {
   locale: Locale
   translations: ITranslations
   setLocale: (locale: Locale) => void
-  t: (key: string, values?: Record<string, unknown>) => string
+  t: T
 }

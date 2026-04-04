@@ -4,7 +4,7 @@ import { localeStore } from './locale.store'
 class LocaleService implements ILocaleService {
   constructor() {}
 
-  public getLocaleHook(): IGetLocaleHook {
+  public getHook(): IGetLocaleHook {
     return {
       locale: localeStore((state) => state.locale),
       t: localeStore((state) => state.t)
