@@ -1,8 +1,11 @@
-import { type IAuthService, type ICatsService } from '@/types'
+import type { IAuthService, ICatsRepository, ICatsService } from '@/types'
 import { catsStore } from './cats.store'
 
 class CatsService implements ICatsService {
-  constructor(private authService: IAuthService) {}
+  constructor(
+    private authService: IAuthService,
+    private catsRepository: ICatsRepository
+  ) {}
 
   public getCats(): number {
     return catsStore((state) => state.cats)

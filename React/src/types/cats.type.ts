@@ -4,3 +4,5 @@ export interface ICatsService {
   removeCat(): void
   userName(): string
 }
+
+export interface ICatsRepository {}

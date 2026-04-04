@@ -1,11 +1,17 @@
 import { io, Socket } from 'socket.io-client'
 import {
   AuthService,
+  CatsRepository,
   CatsService,
   LocaleService,
   ThemeService
 } from '@/modules'
-import { type IAuthService, SERVICES } from '@/types'
+import {
+  type IAuthService,
+  type ICatsRepository,
+  REPOSITORIES,
+  SERVICES
+} from '@/types'
 
 class IoC {
   private instances: { [key: string]: any } = {}
@@ -22,9 +28,13 @@ class IoC {
       case SERVICES.AUTH:
         newInstance = new AuthService()
         break
+      case REPOSITORIES.CATS:
+        newInstance = new CatsRepository()
+        break
       case SERVICES.CATS:
         newInstance = new CatsService(
-          this.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+          this.getOrCreateInstance<IAuthService>(SERVICES.AUTH),
+          this.getOrCreateInstance<ICatsRepository>(REPOSITORIES.CATS)
         )
         break
       case SERVICES.LOCALE:

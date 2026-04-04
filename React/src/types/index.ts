@@ -1,6 +1,7 @@
 export * from './auth.types'
 export * from './cats.type'
 export * from './locale.types'
+export * from './repositories.types'
 export * from './services.type'
 export * from './sidebar.types'
 export * from './theme.type'
