@@ -28,6 +28,11 @@ export const en: ITranslations = {
       title: 'Admin',
       userName: 'User name is {name}',
       count: 'Count {count}'
+    },
+    notFound: {
+      title: 'Page Not Found',
+      message: 'The page you are looking for does not exist.',
+      goBack: 'Go Home'
     }
   },
   nav: {

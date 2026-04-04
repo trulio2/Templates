@@ -26,6 +26,11 @@ interface IPages {
     userName: string
     count: string
   }
+  notFound: {
+    title: string
+    message: string
+    goBack: string
+  }
 }
 
 interface INav {

@@ -7,6 +7,7 @@ import Admin from '@/views/pages/admin/Admin'
 import Cats from '@/views/pages/cats/Cats'
 import Home from '@/views/pages/home/Home'
 import Login from '@/views/pages/login/Login'
+import NotFound from '@/views/pages/notFound/NotFound'
 import Sidebar from '@/views/components/Sidebar'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -81,7 +82,9 @@ export const router = createBrowserRouter([
       {
         element: <RequireRole role="admin" />,
         children: [{ path: 'admin', element: <Admin /> }]
-      }
+      },
+
+      { path: '*', element: <NotFound /> }
     ]
   }
 ])
