@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation, useTheme } from '@/hooks'
 import IoC from '@/ioc'
 import {
@@ -16,6 +16,7 @@ const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
 export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
 
   const user = getUser()
@@ -31,6 +32,7 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
 
   function logout() {
     authService.logout()
+    navigate('/login')
   }
 
   return (
