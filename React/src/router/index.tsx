@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
 import { init } from '@/setup'
@@ -25,7 +25,9 @@ function getUser(): User | null {
 }
 
 function RootLayout() {
-  init()
+  useEffect(() => {
+    init()
+  }, [])
 
   const initialized = rootService.getInitialized()
 
