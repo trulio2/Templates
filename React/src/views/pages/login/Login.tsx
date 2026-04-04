@@ -4,9 +4,9 @@ import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 
-const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
-
 function Login() {
+  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+
   const { t } = useTranslation()
   const navigate = useNavigate()
 

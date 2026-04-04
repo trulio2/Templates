@@ -14,14 +14,6 @@ import {
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
-function getUser(): User | null {
-  return authService.getUser()
-}
-
-function logout() {
-  authService.logout()
-}
-
 export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
@@ -31,6 +23,14 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
 
   function setLocale(newLocale: Locale) {
     localeService.setLocale(newLocale)
+  }
+
+  function getUser(): User | null {
+    return authService.getUser()
+  }
+
+  function logout() {
+    authService.logout()
   }
 
   return (

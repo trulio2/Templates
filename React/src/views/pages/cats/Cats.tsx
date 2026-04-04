@@ -5,9 +5,9 @@ import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type ICatsService, SERVICES } from '@/types'
 
-const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
-
 function Cats() {
+  const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
+
   const { t } = useTranslation()
 
   const cats = catsService.getCats()

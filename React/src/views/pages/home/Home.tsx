@@ -2,9 +2,9 @@ import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 
-const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
-
 function Home() {
+  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+
   const { t } = useTranslation()
 
   const user = authService.getUser()
