@@ -13,6 +13,10 @@ function Cats() {
 
   useEffect(() => {
     catsService.fetchCatImage()
+
+    return () => {
+      IoC.cleanUp(SERVICES.CATS)
+    }
   }, [])
 
   function addCat() {

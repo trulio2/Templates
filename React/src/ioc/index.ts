@@ -1,6 +1,6 @@
-import { io, Socket } from 'socket.io-client'
 import {
   AuthService,
+  BitmexService,
   CatsRepository,
   CatsService,
   LocaleService,
@@ -8,6 +8,7 @@ import {
   ThemeService
 } from '@/modules'
 import {
+  BITMEX_WEBSOCKET_URL,
   type IAuthService,
   type ICatsRepository,
   REPOSITORIES,
@@ -16,7 +17,7 @@ import {
 
 class IoC {
   private instances: { [key: string]: any } = {}
-  private sockets: { [key: string]: Socket } = {}
+  private sockets: { [key: string]: WebSocket } = {}
 
   public getOrCreateInstance<T>(name: string): T {
     const instance = this.instances[name]
@@ -28,6 +29,11 @@ class IoC {
     switch (name) {
       case SERVICES.AUTH:
         newInstance = new AuthService()
+        break
+      case SERVICES.BITMEX:
+        newInstance = new BitmexService(
+          this.getOrCreateSocket(BITMEX_WEBSOCKET_URL)
+        )
         break
       case REPOSITORIES.CATS:
         newInstance = new CatsRepository()
@@ -57,13 +63,33 @@ class IoC {
     return newInstance
   }
 
-  public getOrCreateSocket(url: string): Socket {
+  public getOrCreateSocket(url: string): WebSocket {
     if (!this.sockets[url]) {
-      this.sockets[url] = io(url)
+      this.sockets[url] = new WebSocket(url)
       console.log('New socket created', url)
     }
 
     return this.sockets[url]
+  }
+
+  public cleanUp(name: string): void {
+    switch (name) {
+      case SERVICES.BITMEX:
+        const socket = this.sockets[BITMEX_WEBSOCKET_URL]
+        if (socket) socket.close()
+
+        delete this.instances[SERVICES.BITMEX]
+        delete this.sockets[BITMEX_WEBSOCKET_URL]
+        break
+
+      case SERVICES.CATS:
+        delete this.instances[SERVICES.CATS]
+        delete this.instances[REPOSITORIES.CATS]
+        break
+
+      default:
+        break
+    }
   }
 }
 

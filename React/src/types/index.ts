@@ -1,4 +1,5 @@
 export * from './auth.types'
+export * from './bitmex.types'
 export * from './cats.type'
 export * from './locale.types'
 export * from './repositories.types'
