@@ -9,7 +9,7 @@ export const themeStore = create<themeState>()(
       setTheme: (theme) => set({ theme })
     }),
     {
-      name: 'locale-storage'
+      name: 'theme-storage'
     }
   )
 )
