@@ -36,10 +36,9 @@ export const localeStore = create<LocaleState>()(
   persist(
     (set, get) => ({
       locale: 'en',
-      translations: en,
-      setLocale: (locale) => set({ locale, translations: locales[locale] }),
+      setLocale: (locale) => set({ locale }),
       t: (key, values = {}) => {
-        const message = resolve(get().translations, key)
+        const message = resolve(locales[get().locale], key)
         if (!message) return key
         return interpolate(message, values)
       }

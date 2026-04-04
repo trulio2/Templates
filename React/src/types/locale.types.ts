@@ -67,7 +67,6 @@ export interface ILocaleService {
 
 export interface LocaleState {
   locale: Locale
-  translations: ITranslations
   setLocale: (locale: Locale) => void
   t: T
 }
