@@ -3,6 +3,10 @@ export interface ICatsService {
   addCat(): void
   removeCat(): void
   userName(): string
+  getCatImageUrl(): string | null
+  fetchCatImage(): Promise<void>
 }
 
-export interface ICatsRepository {}
+export interface ICatsRepository {
+  fetchRandomCatImage(): Promise<string>
+}

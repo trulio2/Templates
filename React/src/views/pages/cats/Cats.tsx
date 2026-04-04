@@ -1,6 +1,4 @@
-import reactLogo from '@/assets/react.svg'
-import viteLogo from '@/assets/vite.svg'
-import heroImg from '@/assets/hero.png'
+import { useEffect } from 'react'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type ICatsService, SERVICES } from '@/types'
@@ -11,6 +9,11 @@ function Cats() {
   const { t } = useTranslation()
 
   const cats = catsService.getCats()
+  const catImageUrl = catsService.getCatImageUrl()
+
+  useEffect(() => {
+    catsService.fetchCatImage()
+  }, [])
 
   function addCat() {
     catsService.addCat()
@@ -20,36 +23,23 @@ function Cats() {
     catsService.removeCat()
   }
 
+  function handleImageClick() {
+    catsService.fetchCatImage()
+  }
+
   return (
     <>
       <section id="center">
-        <div className="relative [&>*]:inset-x-0 [&>*]:mx-auto">
-          <img
-            src={heroImg}
-            className="relative w-[170px] z-0"
-            width="170"
-            height="179"
-            alt=""
-          />
-          <img
-            src={reactLogo}
-            className="absolute z-10 top-[34px] h-7"
-            style={{
-              transform:
-                'perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg) scale(1.4)'
-            }}
-            alt="React logo"
-          />
-          <img
-            src={viteLogo}
-            className="absolute z-0 top-[107px] h-[26px] w-auto"
-            style={{
-              transform:
-                'perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg) scale(0.8)'
-            }}
-            alt="Vite logo"
-          />
-        </div>
+        {catImageUrl && (
+          <div className="relative [&>*]:inset-x-0 [&>*]:mx-auto">
+            <img
+              src={catImageUrl}
+              className="w-[300px] h-[300px] object-cover rounded-lg cursor-pointer mb-6"
+              alt="Random cat"
+              onClick={handleImageClick}
+            />
+          </div>
+        )}
         <div></div>
         <span>
           {t('pages.cats.hasCats', {

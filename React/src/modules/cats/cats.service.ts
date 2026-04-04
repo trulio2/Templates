@@ -28,6 +28,22 @@ class CatsService implements ICatsService {
 
     return user?.name || ''
   }
+
+  public getCatImageUrl(): string | null {
+    return catsStore((state) => state.catImageUrl)
+  }
+
+  public async fetchCatImage(): Promise<void> {
+    const { setCatImageUrl } = catsStore.getState()
+
+    try {
+      const url = await this.catsRepository.fetchRandomCatImage()
+
+      setCatImageUrl(url)
+    } catch {
+      setCatImageUrl(null)
+    }
+  }
 }
 
 export default CatsService
