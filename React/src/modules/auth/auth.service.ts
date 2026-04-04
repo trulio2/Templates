@@ -8,6 +8,12 @@ class AuthService implements IAuthService {
     return authStore((state) => state.user)
   }
 
+  public getUserData(): User | null {
+    const { user } = authStore.getState()
+
+    return user
+  }
+
   public setUser(data: User): void {
     const { setUser } = authStore.getState()
 

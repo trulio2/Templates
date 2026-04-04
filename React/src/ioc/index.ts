@@ -4,6 +4,7 @@ import {
   CatsRepository,
   CatsService,
   LocaleService,
+  RootService,
   ThemeService
 } from '@/modules'
 import {
@@ -39,6 +40,9 @@ class IoC {
         break
       case SERVICES.LOCALE:
         newInstance = new LocaleService()
+        break
+      case SERVICES.ROOT:
+        newInstance = new RootService()
         break
       case SERVICES.THEME:
         newInstance = new ThemeService()

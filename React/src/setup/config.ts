@@ -1,12 +1,15 @@
 import IoC from '@/ioc'
-import { type IAuthService, SERVICES } from '@/types'
+import { type IAuthService, type IRootService, SERVICES } from '@/types'
 
-const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+export async function init() {
+  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+  const rootService = IoC.getOrCreateInstance<IRootService>(SERVICES.ROOT)
 
-export function init() {
-  console.log('init')
+  const user = authService.getUserData()
 
-  const user = authService.getUser()
+  if (user) {
+    console.log(user)
+  }
 
-  console.log(user)
+  rootService.setInitialized(true)
 }

@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
-import { SERVICES, type IAuthService, type User } from '@/types'
+import { init } from '@/setup'
+import {
+  SERVICES,
+  type IAuthService,
+  type IRootService,
+  type User
+} from '@/types'
 import './router.css'
 
 import Admin from '@/views/pages/admin/Admin'
@@ -12,13 +18,26 @@ import NotFound from '@/views/pages/notFound/NotFound'
 import Sidebar from '@/views/components/Sidebar'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+const rootService = IoC.getOrCreateInstance<IRootService>(SERVICES.ROOT)
 
 function getUser(): User | null {
   return authService.getUser()
 }
 
 function RootLayout() {
+  init()
+
+  const initialized = rootService.getInitialized()
+
   const [collapsed, setCollapsed] = useState(false)
+
+  if (!initialized) {
+    return (
+      <div className="flex min-h-screen">
+        <main className={'flex-1 transition-all duration-300 ml-64'}></main>
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen">
