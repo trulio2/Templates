@@ -6,10 +6,10 @@ import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
 
+const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+
 function Admin() {
   const { t } = useTranslation()
-
-  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 
   const [count, setCount] = useState(0)
   const user = authService.getUser()
