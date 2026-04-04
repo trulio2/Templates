@@ -7,7 +7,7 @@ import Admin from '@/views/pages/admin/Admin'
 import Cats from '@/views/pages/cats/Cats'
 import Home from '@/views/pages/home/Home'
 import Login from '@/views/pages/login/Login'
-import Sidebar from './Sidebar'
+import Sidebar from '@/views/components/Sidebar'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 
