@@ -112,10 +112,8 @@ export default function Sidebar() {
         )}
       </nav>
 
-      <div className="absolute bottom-4 left-0 right-0 px-4 flex flex-col gap-2">
-        {collapsed ? (
-          <div className="text-center text-sm">{locale}</div>
-        ) : (
+      <div className="absolute  left-0 right-0 px-4 flex flex-col gap-2">
+        {!collapsed && (
           <>
             <select
               value={locale}
@@ -142,17 +140,16 @@ export default function Sidebar() {
           {collapsed ? (
             <button
               onClick={() => logout()}
-              className="w-full text-center text-lg"
+              className="w-full text-center text-lg cursor-pointer"
               title={t('nav.logout')}
             >
               🚪
             </button>
           ) : (
             <div className="flex flex-col gap-2">
-              <span className="text-[var(--text)] text-sm">{user.name}</span>
               <button
                 onClick={() => logout()}
-                className="text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm text-left"
+                className="w-full text-center text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm cursor-pointer"
               >
                 {t('nav.logout')}
               </button>
