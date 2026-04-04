@@ -81,12 +81,10 @@ class IoC {
         delete this.instances[SERVICES.BITMEX]
         delete this.sockets[BITMEX_WEBSOCKET_URL]
         break
-
       case SERVICES.CATS:
         delete this.instances[SERVICES.CATS]
         delete this.instances[REPOSITORIES.CATS]
         break
-
       default:
         break
     }
