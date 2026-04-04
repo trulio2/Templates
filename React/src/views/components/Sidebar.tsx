@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import IoC from '@/ioc'
 import { useTranslation, useTheme } from '@/hooks'
+import IoC from '@/ioc'
 import {
   SERVICES,
   type IAuthService,
