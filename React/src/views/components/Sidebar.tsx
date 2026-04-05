@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation, useTheme } from '@/hooks'
 import IoC from '@/ioc'
+import Button from '@/views/components/Button'
 import {
   SERVICES,
   type IAuthService,
@@ -41,12 +42,14 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
-      <button
+      <Button
+        variant="icon"
+        size="sm"
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-4 w-6 h-6 bg-[var(--accent)] text-white rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
+        className="absolute -right-3 top-4 w-6 h-6"
       >
         {collapsed ? '→' : '←'}
-      </button>
+      </Button>
 
       <nav className="flex flex-col p-4 gap-2 pt-12">
         <NavLink
@@ -139,21 +142,25 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
       {user && (
         <div className="absolute bottom-14 left-0 right-0 px-4">
           {collapsed ? (
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => logout()}
               className="w-full text-center text-lg cursor-pointer"
               title={t('nav.logout')}
             >
               🚪
-            </button>
+            </Button>
           ) : (
             <div className="flex flex-col gap-2">
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => logout()}
                 className="w-full text-center text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm cursor-pointer"
               >
                 {t('nav.logout')}
-              </button>
+              </Button>
             </div>
           )}
         </div>

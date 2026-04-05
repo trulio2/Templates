@@ -1,7 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { en } from '@/locale/en'
-import { pt } from '@/locale/pt'
+import { en, pt } from '@/locale'
 import type { ITranslations, Locale, LocaleState } from '@/types'
 
 const locales: Record<Locale, ITranslations> = { en, pt }

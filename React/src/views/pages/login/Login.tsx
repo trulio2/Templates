@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
+import Button from '@/views/components/Button'
 
 function Login() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -78,12 +79,14 @@ function Login() {
 
           {error && <p className="text-red-500 text-sm m-0">{error}</p>}
 
-          <button
+          <Button
             type="submit"
-            className="px-4 py-2 bg-[var(--accent)] text-white border-none rounded-md cursor-pointer font-[var(--mono)] text-base transition-colors duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
+            variant="primary"
+            size="lg"
+            className="bg-[var(--accent)] text-white border-none hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
           >
             {t('pages.login.submit')}
-          </button>
+          </Button>
         </form>
       </section>
 

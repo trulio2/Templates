@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type ICatsService, SERVICES } from '@/types'
+import Button from '@/views/components/Button'
 
 function Cats() {
   const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
@@ -51,18 +52,16 @@ function Cats() {
             count: cats
           })}
         </span>
-        <button
-          className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+        <Button
           onClick={() => addCat()}
         >
           {t('pages.cats.addCat')}
-        </button>
-        <button
-          className="text-[var(--accent)] bg-[var(--accent-bg)] border-2 border-transparent rounded-md px-2.5 py-1.5 text-sm transition-colors duration-300 mb-6 hover:border-[var(--accent-border)] focus-visible:outline-2 focus-visible:outline-[var(--accent)] focus-visible:outline-offset-2"
+        </Button>
+        <Button
           onClick={() => removeCat()}
         >
           {t('pages.cats.removeCat')}
-        </button>
+        </Button>
       </section>
 
       <div className="ticks"></div>
