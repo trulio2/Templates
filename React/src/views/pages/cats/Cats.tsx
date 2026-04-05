@@ -1,20 +1,29 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useLocale } from '@/hooks'
 import IoC from '@/ioc'
 import { type CatsService } from '@/modules'
 import { SERVICES } from '@/types'
-import { Button } from '@/views/components'
+import { Button, Image } from '@/views/components'
 
 function Cats() {
   const catsService = IoC.getOrCreateInstance<CatsService>(SERVICES.CATS)
+  const [isImageLoading, setIsImageLoading] = useState(true)
 
   const { t } = useLocale()
 
   const cats = catsService.getCats()
   const catImageUrl = catsService.getCatImageUrl()
 
+  async function loadCatImage() {
+    setIsImageLoading(true)
+
+    await catsService.fetchCatImage()
+
+    setIsImageLoading(false)
+  }
+
   useEffect(() => {
-    catsService.fetchCatImage()
+    void loadCatImage()
 
     return () => {
       IoC.cleanUp(SERVICES.CATS)
@@ -30,22 +39,40 @@ function Cats() {
   }
 
   function handleImageClick() {
-    catsService.fetchCatImage()
+    void loadCatImage()
   }
 
   return (
     <Suspense fallback={null}>
       <section id="center">
-        {catImageUrl && (
-          <div className="flex justify-center">
-            <img
-              src={catImageUrl}
-              className="w-[300px] h-[300px] object-cover rounded-lg cursor-pointer mb-6"
-              alt="Random cat"
-              onClick={handleImageClick}
-            />
-          </div>
-        )}
+        <div className="flex justify-center mb-6">
+          <Image
+            src={catImageUrl}
+            alt="Random cat"
+            isLoading={isImageLoading}
+            width={300}
+            height={300}
+            className="cursor-pointer"
+            onClick={handleImageClick}
+          />
+        </div>
+        <div>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((img) => {
+            return (
+              <div className="mb-6" key={img}>
+                <Image
+                  src={catImageUrl}
+                  alt={`Random cat ${img}`}
+                  isLoading={isImageLoading}
+                  width={300}
+                  height={300}
+                  className="cursor-pointer"
+                  onClick={handleImageClick}
+                />
+              </div>
+            )
+          })}
+        </div>
         <div></div>
         <span>
           {t('pages.cats.hasCats', {
