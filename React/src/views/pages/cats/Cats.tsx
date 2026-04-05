@@ -56,24 +56,6 @@ function Cats() {
             onClick={handleImageClick}
           />
         </div>
-        <div>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((img) => {
-            return (
-              <div className="mb-6" key={img}>
-                <Image
-                  src={catImageUrl}
-                  alt={`Random cat ${img}`}
-                  isLoading={isImageLoading}
-                  width={300}
-                  height={300}
-                  className="cursor-pointer"
-                  onClick={handleImageClick}
-                />
-              </div>
-            )
-          })}
-        </div>
-        <div></div>
         <span>
           {t('pages.cats.hasCats', {
             name: catsService.userName(),
