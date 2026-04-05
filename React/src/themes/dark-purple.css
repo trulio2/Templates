@@ -1,0 +1,14 @@
+.dark-purple {
+  --text: #a78bfa;
+  --text-h: #e9d5ff;
+  --bg: #1a0a2e;
+  --border: #3b1f6e;
+  --code-bg: #251045;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.2);
+  --accent-border: rgba(192, 132, 252, 0.6);
+  --social-bg: rgba(59, 31, 110, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.5) 0 10px 15px -3px, rgba(0, 0, 0, 0.3) 0 4px 6px -2px;
+  color-scheme: dark;
+}

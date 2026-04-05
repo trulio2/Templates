@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './light.css';
 @import './dark.css';
+@import './dark-purple.css';
 
 :root {
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;

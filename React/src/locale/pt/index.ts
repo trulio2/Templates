@@ -44,6 +44,7 @@ export const pt: ITranslations = {
   },
   theme: {
     light: 'Claro',
-    dark: 'Escuro'
+    dark: 'Escuro',
+    'dark-purple': 'Roxo Escuro'
   }
 }

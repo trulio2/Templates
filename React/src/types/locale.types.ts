@@ -47,6 +47,7 @@ export interface ITranslations {
   theme: {
     light: string
     dark: string
+    'dark-purple': string
   }
 }
 

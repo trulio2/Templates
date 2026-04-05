@@ -130,6 +130,7 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
             >
               <option value="light">{t('theme.light')}</option>
               <option value="dark">{t('theme.dark')}</option>
+              <option value="dark-purple">{t('theme.dark-purple')}</option>
             </select>
           </>
         )}
