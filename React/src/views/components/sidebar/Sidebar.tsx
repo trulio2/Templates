@@ -5,7 +5,6 @@ import IoC from '@/ioc'
 import {
   SERVICES,
   type IAuthService,
-  type ILocaleService,
   type ISidebarProps,
   type IThemeService,
   type Locale,
@@ -15,20 +14,14 @@ import {
 import { Button } from '@/views/components'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
-const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 const themeService = IoC.getOrCreateInstance<IThemeService>(SERVICES.THEME)
 
 export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
-  const { t } = useTranslation()
+  const { locale, setLocale, t } = useTranslation()
   const navigate = useNavigate()
 
   const user = getUser()
-  const locale = localeService.getLocale()
   const theme = themeService.getTheme()
-
-  function setLocale(newLocale: Locale) {
-    localeService.setLocale(newLocale)
-  }
 
   function setTheme(newTheme: Theme) {
     themeService.setTheme(newTheme)

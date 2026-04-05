@@ -4,7 +4,8 @@ import { SERVICES, type ILocaleService } from '@/types'
 const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
 export function useTranslation() {
-  const { t } = localeService.getHook()
+  const locale = localeService.getLocale()
+  const t = localeService.getT()
 
-  return { t }
+  return { locale, setLocale: localeService.setLocale, t }
 }

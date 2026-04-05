@@ -57,13 +57,8 @@ export type T = (key: string, values?: Record<string, unknown>) => string
 
 export type Locale = 'en' | 'pt'
 
-export interface IGetLocaleHook {
-  locale: Locale
-  t: T
-}
-
 export interface ILocaleService {
-  getHook(): IGetLocaleHook
+  getT(): T
   getLocale(): string
   setLocale(newLocale: Locale): void
 }
