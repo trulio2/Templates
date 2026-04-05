@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
-import Button from '@/views/components/Button'
+import { Button } from '@/views/components'
 
 function Login() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -39,7 +39,7 @@ function Login() {
   }
 
   return (
-    <>
+    <Suspense fallback={null}>
       <section id="center">
         <h1>{t('pages.login.title')}</h1>
 
@@ -94,7 +94,7 @@ function Login() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </Suspense>
   )
 }
 

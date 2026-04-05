@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, type IBitmexService, SERVICES } from '@/types'
@@ -23,7 +23,7 @@ function Home() {
   const user = authService.getUser()
 
   return (
-    <>
+    <Suspense fallback={null}>
       <section id="center">
         <h1>{t('pages.home.welcome')}</h1>
         <p>
@@ -45,7 +45,7 @@ function Home() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </Suspense>
   )
 }
 

@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
-import Button from '@/views/components/Button'
+import { Button } from '@/views/components'
 
 function Admin() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -13,14 +13,10 @@ function Admin() {
   const user = authService.getUser()
 
   return (
-    <>
+    <Suspense fallback={null}>
       <section id="center">
-        <Button>
-          {t('pages.admin.userName', { name: user?.name ?? '' })}
-        </Button>
-        <Button
-          onClick={() => setCount(count + 1)}
-        >
+        <Button>{t('pages.admin.userName', { name: user?.name ?? '' })}</Button>
+        <Button onClick={() => setCount(count + 1)}>
           {t('pages.admin.count', { count })}
         </Button>
       </section>
@@ -29,7 +25,7 @@ function Admin() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </Suspense>
   )
 }
 

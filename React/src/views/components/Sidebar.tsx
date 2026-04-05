@@ -1,7 +1,7 @@
+import { Suspense } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation, useTheme } from '@/hooks'
 import IoC from '@/ioc'
-import Button from '@/views/components/Button'
 import {
   SERVICES,
   type IAuthService,
@@ -11,6 +11,7 @@ import {
   type Theme,
   type User
 } from '@/types'
+import { Button } from '@/views/components'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
@@ -37,134 +38,136 @@ export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
   }
 
   return (
-    <aside
-      className={`fixed left-0 top-0 h-full bg-[var(--bg)] border-r border-[var(--border)] transition-all duration-300 ease-in-out z-50 ${
-        collapsed ? 'w-16' : 'w-64'
-      }`}
-    >
-      <Button
-        variant="icon"
-        size="sm"
-        onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-4 w-6 h-6"
+    <Suspense fallback={null}>
+      <aside
+        className={`fixed left-0 top-0 h-full bg-[var(--bg)] border-r border-[var(--border)] transition-all duration-300 ease-in-out z-50 ${
+          collapsed ? 'w-16' : 'w-64'
+        }`}
       >
-        {collapsed ? '→' : '←'}
-      </Button>
-
-      <nav className="flex flex-col p-4 gap-2 pt-12">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `px-3 py-2 rounded transition-colors ${
-              isActive
-                ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
-                : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
-            } ${collapsed ? 'text-center' : ''}`
-          }
-          title={collapsed ? t('nav.home') : undefined}
+        <Button
+          variant="icon"
+          size="sm"
+          onClick={() => setCollapsed(!collapsed)}
+          className="absolute -right-3 top-4 w-6 h-6"
         >
-          {collapsed ? '🏠' : t('nav.home')}
-        </NavLink>
+          {collapsed ? '→' : '←'}
+        </Button>
+
+        <nav className="flex flex-col p-4 gap-2 pt-12">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded transition-colors ${
+                isActive
+                  ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
+                  : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
+              } ${collapsed ? 'text-center' : ''}`
+            }
+            title={collapsed ? t('nav.home') : undefined}
+          >
+            {collapsed ? '🏠' : t('nav.home')}
+          </NavLink>
+
+          {user && (
+            <NavLink
+              to="/cats"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded transition-colors ${
+                  isActive
+                    ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
+                    : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
+                } ${collapsed ? 'text-center' : ''}`
+              }
+              title={collapsed ? t('nav.cats') : undefined}
+            >
+              {collapsed ? '🐱' : t('nav.cats')}
+            </NavLink>
+          )}
+
+          {user?.role === 'admin' && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded transition-colors ${
+                  isActive
+                    ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
+                    : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
+                } ${collapsed ? 'text-center' : ''}`
+              }
+              title={collapsed ? t('nav.admin') : undefined}
+            >
+              {collapsed ? '⚙️' : t('nav.admin')}
+            </NavLink>
+          )}
+
+          {!user && (
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded transition-colors ${
+                  isActive
+                    ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
+                    : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
+                } ${collapsed ? 'text-center' : ''}`
+              }
+              title={collapsed ? t('nav.login') : undefined}
+            >
+              {collapsed ? '🔑' : t('nav.login')}
+            </NavLink>
+          )}
+        </nav>
+
+        <div className="absolute  left-0 right-0 px-4 flex flex-col gap-2">
+          {!collapsed && (
+            <>
+              <select
+                value={locale}
+                onChange={(e) => setLocale(e.target.value as Locale)}
+                className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
+              >
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+              </select>
+              <select
+                value={theme}
+                onChange={(e) => setTheme(e.target.value as Theme)}
+                className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
+              >
+                <option value="light">{t('theme.light')}</option>
+                <option value="dark">{t('theme.dark')}</option>
+                <option value="dark-purple">{t('theme.dark-purple')}</option>
+              </select>
+            </>
+          )}
+        </div>
 
         {user && (
-          <NavLink
-            to="/cats"
-            className={({ isActive }) =>
-              `px-3 py-2 rounded transition-colors ${
-                isActive
-                  ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
-                  : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
-              } ${collapsed ? 'text-center' : ''}`
-            }
-            title={collapsed ? t('nav.cats') : undefined}
-          >
-            {collapsed ? '🐱' : t('nav.cats')}
-          </NavLink>
-        )}
-
-        {user?.role === 'admin' && (
-          <NavLink
-            to="/admin"
-            className={({ isActive }) =>
-              `px-3 py-2 rounded transition-colors ${
-                isActive
-                  ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
-                  : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
-              } ${collapsed ? 'text-center' : ''}`
-            }
-            title={collapsed ? t('nav.admin') : undefined}
-          >
-            {collapsed ? '⚙️' : t('nav.admin')}
-          </NavLink>
-        )}
-
-        {!user && (
-          <NavLink
-            to="/login"
-            className={({ isActive }) =>
-              `px-3 py-2 rounded transition-colors ${
-                isActive
-                  ? 'bg-[var(--accent-bg)] text-[var(--accent)]'
-                  : 'text-[var(--text)] hover:bg-[var(--accent-bg)]'
-              } ${collapsed ? 'text-center' : ''}`
-            }
-            title={collapsed ? t('nav.login') : undefined}
-          >
-            {collapsed ? '🔑' : t('nav.login')}
-          </NavLink>
-        )}
-      </nav>
-
-      <div className="absolute  left-0 right-0 px-4 flex flex-col gap-2">
-        {!collapsed && (
-          <>
-            <select
-              value={locale}
-              onChange={(e) => setLocale(e.target.value as Locale)}
-              className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
-            >
-              <option value="en">English</option>
-              <option value="pt">Português</option>
-            </select>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as Theme)}
-              className="w-full px-2 py-1.5 text-sm border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text)] cursor-pointer focus:outline-none focus:border-[var(--accent)]"
-            >
-              <option value="light">{t('theme.light')}</option>
-              <option value="dark">{t('theme.dark')}</option>
-              <option value="dark-purple">{t('theme.dark-purple')}</option>
-            </select>
-          </>
-        )}
-      </div>
-
-      {user && (
-        <div className="absolute bottom-14 left-0 right-0 px-4">
-          {collapsed ? (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => logout()}
-              className="w-full text-center text-lg cursor-pointer"
-              title={t('nav.logout')}
-            >
-              🚪
-            </Button>
-          ) : (
-            <div className="flex flex-col gap-2">
+          <div className="absolute bottom-14 left-0 right-0 px-4">
+            {collapsed ? (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => logout()}
-                className="w-full text-center text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm cursor-pointer"
+                className="w-full text-center text-lg cursor-pointer"
+                title={t('nav.logout')}
               >
-                {t('nav.logout')}
+                🚪
               </Button>
-            </div>
-          )}
-        </div>
-      )}
-    </aside>
+            ) : (
+              <div className="flex flex-col gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => logout()}
+                  className="w-full text-center text-[var(--text)] hover:text-[var(--accent)] transition-colors text-sm cursor-pointer"
+                >
+                  {t('nav.logout')}
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+      </aside>
+    </Suspense>
   )
 }

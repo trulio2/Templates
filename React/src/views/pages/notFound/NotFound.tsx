@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from '@/hooks'
 
@@ -5,7 +6,7 @@ function NotFound() {
   const { t } = useTranslation()
 
   return (
-    <>
+    <Suspense fallback={null}>
       <section id="center">
         <h1 className="text-[var(--accent)]">404</h1>
         <p className="text-lg">{t('pages.notFound.message')}</p>
@@ -21,7 +22,7 @@ function NotFound() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </Suspense>
   )
 }
 

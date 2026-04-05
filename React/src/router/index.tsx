@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
 import { init } from '@/setup'
@@ -10,12 +10,13 @@ import {
 } from '@/types'
 import './router.css'
 
-import Admin from '@/views/pages/admin/Admin'
-import Cats from '@/views/pages/cats/Cats'
-import Home from '@/views/pages/home/Home'
-import Login from '@/views/pages/login/Login'
-import NotFound from '@/views/pages/notFound/NotFound'
-import Sidebar from '@/views/components/Sidebar'
+import { Sidebar } from '@/views/components'
+
+const Admin = lazy(() => import('@/views/pages/admin/Admin'))
+const Cats = lazy(() => import('@/views/pages/cats/Cats'))
+const Home = lazy(() => import('@/views/pages/home/Home'))
+const Login = lazy(() => import('@/views/pages/login/Login'))
+const NotFound = lazy(() => import('@/views/pages/notFound/NotFound'))
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 const rootService = IoC.getOrCreateInstance<IRootService>(SERVICES.ROOT)
@@ -88,29 +89,84 @@ function RequireRole({ role }: { role: 'admin' | 'user' }) {
   return <Outlet />
 }
 
+function LazyPage({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="w-8 h-8 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      }
+    >
+      {children}
+    </Suspense>
+  )
+}
+
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: <Home /> },
+      {
+        index: true,
+        element: (
+          <LazyPage>
+            <Home />
+          </LazyPage>
+        )
+      },
 
       {
         element: <RequireGuest />,
-        children: [{ path: 'login', element: <Login /> }]
+        children: [
+          {
+            path: 'login',
+            element: (
+              <LazyPage>
+                <Login />
+              </LazyPage>
+            )
+          }
+        ]
       },
 
       {
         element: <RequireAuth />,
-        children: [{ path: 'cats', element: <Cats /> }]
+        children: [
+          {
+            path: 'cats',
+            element: (
+              <LazyPage>
+                <Cats />
+              </LazyPage>
+            )
+          }
+        ]
       },
 
       {
         element: <RequireRole role="admin" />,
-        children: [{ path: 'admin', element: <Admin /> }]
+        children: [
+          {
+            path: 'admin',
+            element: (
+              <LazyPage>
+                <Admin />
+              </LazyPage>
+            )
+          }
+        ]
       },
 
-      { path: '*', element: <NotFound /> }
+      {
+        path: '*',
+        element: (
+          <LazyPage>
+            <NotFound />
+          </LazyPage>
+        )
+      }
     ]
   }
 ])
