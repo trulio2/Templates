@@ -130,13 +130,7 @@ Supported locales: English (`en`), Portuguese (`pt`).
 
 ### Theming
 
-Three themes available: `light`, `dark`, `dark-purple`. Themes are CSS files in `src/themes/` imported in `main.tsx`. The `useTheme()` hook applies CSS classes to `<html>`:
-
-```typescript
-import { useTheme } from '@/hooks'
-
-const { theme, setTheme } = useTheme()
-```
+Three themes available: `light`, `dark`, `dark-purple`. Themes are CSS files in `src/themes/` imported in `main.tsx`.
 
 ## Features
 
@@ -148,13 +142,13 @@ const { theme, setTheme } = useTheme()
 
 ### Pages
 
-| Route | Guard | Description |
-|-------|-------|-------------|
-| `/` | None | Home page with greeting |
-| `/login` | RequireGuest | Login form |
-| `/cats` | RequireAuth | Cat counter with random cat images from thecatapi.com |
-| `/admin` | RequireRole: admin | Admin-only page |
-| `*` | None | 404 Not Found |
+| Route    | Guard              | Description                                           |
+| -------- | ------------------ | ----------------------------------------------------- |
+| `/`      | None               | Home page with greeting                               |
+| `/login` | RequireGuest       | Login form                                            |
+| `/cats`  | RequireAuth        | Cat counter with random cat images from thecatapi.com |
+| `/admin` | RequireRole: admin | Admin-only page                                       |
+| `*`      | None               | 404 Not Found                                         |
 
 ### Sidebar
 
@@ -193,4 +187,3 @@ Real-time trade data subscription from BitMEX WebSocket (`trade:XBTUSD`). Demons
 2. Import in `src/themes/index.css`
 3. Add to `Theme` type in `src/types/theme.type.ts`
 4. Add to theme selector in `Sidebar.tsx`
-5. Handle in `useTheme()` hook

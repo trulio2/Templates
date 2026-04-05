@@ -43,7 +43,6 @@ src/
 |
 +---hooks
 |       index.ts
-|       useTheme.ts
 |       useTranslation.ts
 |
 +---ioc

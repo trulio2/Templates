@@ -1,4 +1,4 @@
-import type { IThemeService, Theme } from '@/types'
+import { type IThemeService, type Theme, THEMES } from '@/types'
 import { themeStore } from './theme.store'
 
 class ThemeService implements IThemeService {
@@ -10,6 +10,9 @@ class ThemeService implements IThemeService {
 
   public setTheme(newTheme: Theme): void {
     const { setTheme } = themeStore.getState()
+
+    document.documentElement.classList.remove(...THEMES)
+    document.documentElement.classList.add(newTheme)
 
     setTheme(newTheme)
   }
