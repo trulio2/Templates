@@ -116,9 +116,11 @@ Routes are defined in `src/router/index.tsx` using React Router v7 with lazy-loa
 
 ### Internationalization
 
-Custom i18n system (no external library). Translations are plain objects in `src/locale/{en,pt}/`. The `t()` function is available globally. Initialized in `src/setup/global.ts`:
+Custom i18n system (no external library). Translations are plain objects in `src/locale/{en,pt}/`. Components should use `useLocale()` from `src/hooks` to access `locale`, `setLocale`, and `t`:
 
 ```typescript
+const { t, locale, setLocale } = useLocale()
+
 t('pages.cats.hasCats', { name: 'Alice', count: 5 })
 // → "Alice has 5 cats"
 ```
