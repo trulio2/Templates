@@ -38,6 +38,9 @@ function Login() {
     }
   }
 
+  const inputClasses =
+    'px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60'
+
   return (
     <Suspense fallback={null}>
       <section id="center">
@@ -58,7 +61,7 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder={t('pages.login.enterUsername')}
-              className="px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60"
+              className={inputClasses}
             />
           </div>
 
@@ -73,18 +76,13 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={t('pages.login.enterPassword')}
-              className="px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60"
+              className={inputClasses}
             />
           </div>
 
           {error && <p className="text-red-500 text-sm m-0">{error}</p>}
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="bg-[var(--accent)] text-white border-none hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:ring-offset-2"
-          >
+          <Button type="submit" variant="primary" size="lg">
             {t('pages.login.submit')}
           </Button>
         </form>

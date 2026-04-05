@@ -36,7 +36,7 @@ function Cats() {
     <Suspense fallback={null}>
       <section id="center">
         {catImageUrl && (
-          <div className="relative [&>*]:inset-x-0 [&>*]:mx-auto">
+          <div className="flex justify-center">
             <img
               src={catImageUrl}
               className="w-[300px] h-[300px] object-cover rounded-lg cursor-pointer mb-6"
