@@ -1,18 +1,13 @@
 import { Suspense, useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
+import type { AuthService, RootService } from '@/modules'
 import { init } from '@/setup'
-import {
-  SERVICES,
-  type IAuthService,
-  type IRootService,
-  type User
-} from '@/types'
-
+import { SERVICES, type User } from '@/types'
 import { Sidebar } from '@/views/components'
 
-const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
-const rootService = IoC.getOrCreateInstance<IRootService>(SERVICES.ROOT)
+const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
+const rootService = IoC.getOrCreateInstance<RootService>(SERVICES.ROOT)
 
 function getUser(): User | null {
   return authService.getUser()

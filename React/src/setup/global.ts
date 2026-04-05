@@ -1,13 +1,14 @@
 import IoC from '@/ioc'
-import { SERVICES, type ILocaleService } from '@/types'
+import { SERVICES } from '@/types'
+import type { LocaleService } from '@/modules'
 
-const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
+const localeService = IoC.getOrCreateInstance<LocaleService>(SERVICES.LOCALE)
 
 declare global {
   var t: (key: string, values?: Record<string, unknown>) => string
 }
 
-globalThis.t = (key, values) => {
+globalThis.t = (key, values = {}) => {
   return localeService.getTranslation(key, values)
 }
 

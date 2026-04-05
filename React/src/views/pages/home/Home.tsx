@@ -1,11 +1,12 @@
 import { Suspense, useEffect } from 'react'
 import IoC from '@/ioc'
-import { type IAuthService, type IBitmexService, SERVICES } from '@/types'
+import type { AuthService, BitmexService } from '@/modules'
+import { SERVICES } from '@/types'
 import './Home.css'
 
 function Home() {
-  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
-  const bitmexService = IoC.getOrCreateInstance<IBitmexService>(SERVICES.BITMEX)
+  const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
+  const bitmexService = IoC.getOrCreateInstance<BitmexService>(SERVICES.BITMEX)
 
   useEffect(() => {
     bitmexService.subscribe()

@@ -1,10 +1,11 @@
 import { Suspense, useState } from 'react'
 import IoC from '@/ioc'
-import { type IAuthService, SERVICES } from '@/types'
+import type { AuthService } from '@/modules'
+import { SERVICES } from '@/types'
 import { Button } from '@/views/components'
 
 function Admin() {
-  const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
+  const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
 
   const [count, setCount] = useState(0)
   const user = authService.getUser()

@@ -1,10 +1,11 @@
 import { Suspense, useEffect } from 'react'
 import IoC from '@/ioc'
-import { type ICatsService, SERVICES } from '@/types'
+import type { CatsService } from '@/modules'
+import { SERVICES } from '@/types'
 import { Button } from '@/views/components'
 
 function Cats() {
-  const catsService = IoC.getOrCreateInstance<ICatsService>(SERVICES.CATS)
+  const catsService = IoC.getOrCreateInstance<CatsService>(SERVICES.CATS)
 
   const cats = catsService.getCats()
   const catImageUrl = catsService.getCatImageUrl()
