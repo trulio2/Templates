@@ -41,7 +41,6 @@ No test framework is configured.
 src/
 |   main.tsx
 |
-+---assets
 +---hooks
 |       index.ts
 |       useTheme.ts
@@ -97,10 +96,6 @@ src/
 +---router
 |       index.tsx
 |       Layout.tsx
-|
-+---setup
-|       config.ts
-|       index.ts
 |
 +---themes
 |       dark-purple.css
