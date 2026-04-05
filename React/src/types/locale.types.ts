@@ -41,14 +41,16 @@ interface INav {
   logout: string
 }
 
+interface ITheme {
+  light: string
+  dark: string
+  'dark-purple': string
+}
+
 export interface ITranslations {
   pages: IPages
   nav: INav
-  theme: {
-    light: string
-    dark: string
-    'dark-purple': string
-  }
+  theme: ITheme
 }
 
 export type T = (key: string, values?: Record<string, unknown>) => string
