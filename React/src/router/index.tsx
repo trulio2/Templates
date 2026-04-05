@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import IoC from '@/ioc'
 import { init } from '@/setup'
@@ -11,12 +11,7 @@ import {
 import './router.css'
 
 import { Sidebar } from '@/views/components'
-
-const Admin = lazy(() => import('@/views/pages/admin/Admin'))
-const Cats = lazy(() => import('@/views/pages/cats/Cats'))
-const Home = lazy(() => import('@/views/pages/home/Home'))
-const Login = lazy(() => import('@/views/pages/login/Login'))
-const NotFound = lazy(() => import('@/views/pages/notFound/NotFound'))
+import { Admin, Cats, Home, Login, NotFound } from '@/views/pages'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 const rootService = IoC.getOrCreateInstance<IRootService>(SERVICES.ROOT)
@@ -116,7 +111,6 @@ export const router = createBrowserRouter([
           </LazyPage>
         )
       },
-
       {
         element: <RequireGuest />,
         children: [
@@ -130,7 +124,6 @@ export const router = createBrowserRouter([
           }
         ]
       },
-
       {
         element: <RequireAuth />,
         children: [
@@ -144,7 +137,6 @@ export const router = createBrowserRouter([
           }
         ]
       },
-
       {
         element: <RequireRole role="admin" />,
         children: [
@@ -158,7 +150,6 @@ export const router = createBrowserRouter([
           }
         ]
       },
-
       {
         path: '*',
         element: (
