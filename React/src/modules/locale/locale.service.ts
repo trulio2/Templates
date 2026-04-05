@@ -1,23 +1,27 @@
-import type { ILocaleService, Locale, T } from '@/types'
+import type { ILocaleService, Locale } from '@/types'
+import { interpolate, locales, resolve } from '@/utils'
 import { localeStore } from './locale.store'
 
 class LocaleService implements ILocaleService {
   constructor() {}
 
-  public getLocale(): string {
+  public getLocale(): Locale {
     return localeStore((state) => state.locale)
-  }
-
-  public getT(): T {
-    const { t } = localeStore.getState()
-
-    return t
   }
 
   public setLocale(newLocale: Locale): void {
     const { setLocale } = localeStore.getState()
 
     setLocale(newLocale)
+  }
+  public getTranslation(key: string, values: Record<string, unknown>): string {
+    const locale = localeStore((state) => state.locale)
+
+    const message = resolve(locales[locale], key)
+
+    if (!message) return key
+
+    return interpolate(message, values)
   }
 }
 

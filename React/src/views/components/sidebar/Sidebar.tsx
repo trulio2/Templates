@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import {
   SERVICES,
   type IAuthService,
+  type ILocaleService,
   type ISidebarProps,
   type IThemeService,
   type Locale,
@@ -15,13 +15,18 @@ import { Button } from '@/views/components'
 
 const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
 const themeService = IoC.getOrCreateInstance<IThemeService>(SERVICES.THEME)
+const localeService = IoC.getOrCreateInstance<ILocaleService>(SERVICES.LOCALE)
 
 export default function Sidebar({ collapsed, setCollapsed }: ISidebarProps) {
-  const { locale, setLocale, t } = useTranslation()
   const navigate = useNavigate()
 
   const user = getUser()
   const theme = themeService.getTheme()
+  const locale = localeService.getLocale()
+
+  function setLocale(newLocale: Locale) {
+    localeService.setLocale(newLocale)
+  }
 
   function setTheme(newTheme: Theme) {
     themeService.setTheme(newTheme)

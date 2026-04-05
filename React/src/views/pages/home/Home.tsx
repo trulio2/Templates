@@ -1,5 +1,4 @@
 import { Suspense, useEffect } from 'react'
-import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, type IBitmexService, SERVICES } from '@/types'
 import './Home.css'
@@ -17,8 +16,6 @@ function Home() {
   }, [])
 
   const trade = bitmexService.getTrade()
-
-  const { t } = useTranslation()
 
   const user = authService.getUser()
 

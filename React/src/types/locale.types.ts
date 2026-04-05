@@ -53,18 +53,15 @@ export interface ITranslations {
   theme: ITheme
 }
 
-export type T = (key: string, values?: Record<string, unknown>) => string
-
 export type Locale = 'en' | 'pt'
 
 export interface ILocaleService {
-  getT(): T
-  getLocale(): string
+  getLocale(): Locale
   setLocale(newLocale: Locale): void
+  getTranslation(key: string, values?: Record<string, unknown>): string
 }
 
 export interface LocaleState {
   locale: Locale
-  setLocale: (locale: Locale) => void
-  t: T
+  setLocale(locale: Locale): void
 }

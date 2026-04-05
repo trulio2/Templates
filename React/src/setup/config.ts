@@ -1,3 +1,5 @@
+import './global'
+
 import IoC from '@/ioc'
 import { type IAuthService, type IRootService, SERVICES } from '@/types'
 
