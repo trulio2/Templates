@@ -34,3 +34,122 @@ No test framework is configured.
 - New modules should follow the `service + store + (optional) repository` pattern and be exported from their `index.ts` and `src/modules/index.ts`.
 - Protected routes use wrapper components from `src/router/Layout.tsx`.
 - Components can only communicate directly with services.
+
+## Folder Structure
+
+```text
+src/
+|   main.tsx
+|
++---assets
++---hooks
+|       index.ts
+|       useTheme.ts
+|       useTranslation.ts
+|
++---ioc
+|       index.ts
+|
++---locale
+|   |   index.ts
+|   |
+|   +---en
+|   |       index.ts
+|   |
+|   \---pt
+|           index.ts
+|
++---modules
+|   |   index.ts
+|   |
+|   +---auth
+|   |       auth.repository.ts
+|   |       auth.service.ts
+|   |       auth.store.ts
+|   |       index.ts
+|   |
+|   +---bitmex
+|   |       bitmex.service.ts
+|   |       bitmex.store.ts
+|   |       index.ts
+|   |
+|   +---cats
+|   |       cats.repository.ts
+|   |       cats.service.ts
+|   |       cats.store.ts
+|   |       index.ts
+|   |
+|   +---locale
+|   |       index.ts
+|   |       locale.service.ts
+|   |       locale.store.ts
+|   |
+|   +---root
+|   |       index.ts
+|   |       root.service.ts
+|   |       root.store.ts
+|   |
+|   \---theme
+|           index.ts
+|           theme.service.ts
+|           theme.store.ts
+|
++---router
+|       index.tsx
+|       Layout.tsx
+|
++---setup
+|       config.ts
+|       index.ts
+|
++---themes
+|       dark-purple.css
+|       dark.css
+|       index.css
+|       light.css
+|
++---types
+|       auth.types.ts
+|       bitmex.types.ts
+|       cats.type.ts
+|       index.ts
+|       locale.types.ts
+|       repositories.types.ts
+|       root.types.ts
+|       services.type.ts
+|       sidebar.types.ts
+|       theme.type.ts
+|       user.type.ts
+|
+\---views
+    +---components
+    |   |   index.tsx
+    |   |
+    |   +---button
+    |   |       Button.tsx
+    |   |
+    |   +---input
+    |   |       Input.tsx
+    |   |
+    |   \---sidebar
+    |           Sidebar.tsx
+    |
+    \---pages
+        |   index.tsx
+        |
+        +---admin
+        |       Admin.tsx
+        |
+        +---cats
+        |       Cats.tsx
+        |
+        +---home
+        |       Home.css
+        |       Home.tsx
+        |
+        +---login
+        |       Login.tsx
+        |
+        \---notFound
+                NotFound.tsx
+```

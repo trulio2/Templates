@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from '@/hooks'
 import IoC from '@/ioc'
 import { type IAuthService, SERVICES } from '@/types'
-import { Button } from '@/views/components'
+import { Button, Input } from '@/views/components'
 
 function Login() {
   const authService = IoC.getOrCreateInstance<IAuthService>(SERVICES.AUTH)
@@ -38,9 +38,6 @@ function Login() {
     }
   }
 
-  const inputClasses =
-    'px-3 py-2 border border-[var(--border)] rounded-md bg-[var(--bg)] text-[var(--text-h)] text-base font-[var(--sans)] transition-colors duration-200 focus:outline-none focus:border-[var(--accent)] placeholder:text-[var(--text)] placeholder:opacity-60'
-
   return (
     <Suspense fallback={null}>
       <section id="center">
@@ -50,35 +47,27 @@ function Login() {
           className="flex flex-col gap-5 w-full max-w-[360px]"
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="username" className="text-sm text-[var(--text-h)]">
-              {t('pages.login.username')}
-            </label>
-            <input
-              id="username"
-              type="text"
-              autoComplete="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder={t('pages.login.enterUsername')}
-              className={inputClasses}
-            />
-          </div>
+          <Input
+            id="username"
+            type="text"
+            size="lg"
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            label={t('pages.login.username')}
+            placeholder={t('pages.login.enterUsername')}
+          />
 
-          <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="password" className="text-sm text-[var(--text-h)]">
-              {t('pages.login.password')}
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t('pages.login.enterPassword')}
-              className={inputClasses}
-            />
-          </div>
+          <Input
+            id="password"
+            type="password"
+            size="lg"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label={t('pages.login.password')}
+            placeholder={t('pages.login.enterPassword')}
+          />
 
           {error && <p className="text-red-500 text-sm m-0">{error}</p>}
 
