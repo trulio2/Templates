@@ -9,7 +9,10 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
-    document.documentElement.classList.toggle('dark-purple', theme === 'dark-purple')
+    document.documentElement.classList.toggle(
+      'dark-purple',
+      theme === 'dark-purple'
+    )
   }, [theme])
 
   function setTheme(newTheme: Theme) {
