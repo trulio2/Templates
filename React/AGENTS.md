@@ -24,8 +24,8 @@ No test framework is configured.
   - `root/` — root service + store
   - `theme/` — theme service + store
 - **State**: Zustand stores live inside each module (`*.store.ts`). Access via `create()` from zustand.
-- **i18n**: Custom system. Locale files in `src/locale/{en,pt}/`. Use `useTranslation()` hook from `src/hooks/`.
-- **Themes**: CSS files in `src/themes/` — imported in `main.tsx`.
+- **i18n**: Custom system. Locale files in `src/locale/{en,pt}/`. Use the global `t(key, values?)` function anywhere — no hooks needed. Initialized in `src/setup/global.ts`.
+- **Themes**: CSS files in `src/themes/` — imported in `main.tsx`. Theme switching via `ThemeService`.
 - **Path alias**: `@` resolves to `./src` (configured in `vite.config.ts`).
 
 ## Conventions
@@ -43,7 +43,6 @@ src/
 |
 +---hooks
 |       index.ts
-|       useTranslation.ts
 |
 +---ioc
 |       index.ts
@@ -95,6 +94,9 @@ src/
 +---router
 |       index.tsx
 |       Layout.tsx
+|
++---setup
+|       global.ts
 |
 +---themes
 |       dark-purple.css
