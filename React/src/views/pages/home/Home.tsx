@@ -1,12 +1,15 @@
 import { Suspense, useEffect } from 'react'
+import { useLocale } from '@/hooks'
 import IoC from '@/ioc'
-import type { AuthService, BitmexService } from '@/modules'
+import { type AuthService, type BitmexService } from '@/modules'
 import { SERVICES } from '@/types'
 import './Home.css'
 
 function Home() {
   const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
   const bitmexService = IoC.getOrCreateInstance<BitmexService>(SERVICES.BITMEX)
+
+  const { t } = useLocale()
 
   useEffect(() => {
     bitmexService.subscribe()

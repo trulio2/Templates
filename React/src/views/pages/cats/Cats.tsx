@@ -1,11 +1,14 @@
 import { Suspense, useEffect } from 'react'
+import { useLocale } from '@/hooks'
 import IoC from '@/ioc'
-import type { CatsService } from '@/modules'
+import { type CatsService } from '@/modules'
 import { SERVICES } from '@/types'
 import { Button } from '@/views/components'
 
 function Cats() {
   const catsService = IoC.getOrCreateInstance<CatsService>(SERVICES.CATS)
+
+  const { t } = useLocale()
 
   const cats = catsService.getCats()
   const catImageUrl = catsService.getCatImageUrl()

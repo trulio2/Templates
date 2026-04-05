@@ -1,7 +1,10 @@
 import { Suspense } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useLocale } from '@/hooks'
 
 function NotFound() {
+  const { t } = useLocale()
+
   return (
     <Suspense fallback={null}>
       <section id="center">

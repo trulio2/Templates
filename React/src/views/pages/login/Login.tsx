@@ -1,12 +1,15 @@
 import { Suspense, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLocale } from '@/hooks'
 import IoC from '@/ioc'
-import type { AuthService } from '@/modules'
+import { type AuthService } from '@/modules'
 import { SERVICES } from '@/types'
 import { Button, Input } from '@/views/components'
 
 function Login() {
   const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
+
+  const { t } = useLocale()
   const navigate = useNavigate()
 
   const [username, setUsername] = useState('')

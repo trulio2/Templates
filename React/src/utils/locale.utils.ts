@@ -5,17 +5,17 @@ export const locales: Record<Locale, ITranslations> = { en, pt }
 
 export function interpolate(
   message: string,
-  values: Record<string, unknown>
+  values?: Record<string, unknown>
 ): string {
   return message.replace(/\{([^}]+)\}/g, (_, key: string) => {
     const parts = key.split(',').map((p: string) => p.trim())
     if (parts[1] === 'plural') {
-      const count = Number(values[parts[0]])
+      const count = Number(values?.[parts[0]])
       const form = count === 1 ? 'one' : 'other'
       const match = key.match(new RegExp(`${form}\\s*\\{([^}]*)\\}`))
       return match ? match[1] : String(count)
     }
-    return String(values[parts[0]] ?? '')
+    return String(values?.[parts[0]] ?? '')
   })
 }
 

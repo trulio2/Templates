@@ -1,5 +1,3 @@
-import './global'
-
 import IoC from '@/ioc'
 import type { AuthService, RootService } from '@/modules'
 import { SERVICES } from '@/types'

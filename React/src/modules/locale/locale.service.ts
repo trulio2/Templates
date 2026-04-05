@@ -14,10 +14,9 @@ class LocaleService implements ILocaleService {
 
     setLocale(newLocale)
   }
-  public getTranslation(key: string, values: Record<string, unknown>): string {
-    const locale = localeStore((state) => state.locale)
 
-    const message = resolve(locales[locale], key)
+  public getTranslation(key: string, values?: Record<string, unknown>): string {
+    const message = resolve(locales[localeStore.getState().locale], key)
 
     if (!message) return key
 

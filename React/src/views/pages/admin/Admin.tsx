@@ -1,11 +1,14 @@
 import { Suspense, useState } from 'react'
+import { useLocale } from '@/hooks'
 import IoC from '@/ioc'
-import type { AuthService } from '@/modules'
+import { type AuthService } from '@/modules'
 import { SERVICES } from '@/types'
 import { Button } from '@/views/components'
 
 function Admin() {
   const authService = IoC.getOrCreateInstance<AuthService>(SERVICES.AUTH)
+
+  const { t } = useLocale()
 
   const [count, setCount] = useState(0)
   const user = authService.getUser()
