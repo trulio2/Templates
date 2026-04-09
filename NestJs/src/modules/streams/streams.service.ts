@@ -8,6 +8,7 @@ import { StreamsRepository } from './streams.repository'
 
 @Injectable()
 export class StreamsService {
+  private service = {} as any
   constructor(private readonly streamsRepository: StreamsRepository) {}
 
   findAll(user: User): Promise<Message[]> {
