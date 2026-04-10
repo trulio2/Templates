@@ -9,26 +9,7 @@ async function bootstrap() {
   const port = Number(process.env.PORT ?? 3000)
   const logger = new JsonLogger()
   let isShuttingDown = false
-  let app: Awaited<ReturnType<typeof NestFactory.create>> | undefined
   let observability: { shutdown: () => Promise<void> } | undefined
-
-  const shutdown = async () => {
-    if (isShuttingDown) return
-    isShuttingDown = true
-
-    await app?.close()
-    await observability?.shutdown()
-  }
-
-  const exitOnSignal = () => {
-    void shutdown().finally(() => {
-      process.exit(0)
-    })
-  }
-
-  process.once('SIGINT', exitOnSignal)
-  process.once('SIGTERM', exitOnSignal)
-  process.once('SIGUSR2', exitOnSignal)
 
   startObservability()
     .then((runtime) => {
@@ -38,7 +19,7 @@ async function bootstrap() {
       logger.error(error instanceof Error ? error : new Error(String(error)))
     })
 
-  app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create(AppModule, {
     bufferLogs: true
   })
   app.useLogger(logger)
@@ -49,7 +30,20 @@ async function bootstrap() {
     })
   )
   app.enableCors()
+  app.enableShutdownHooks()
   await app.listen(port)
+
+  const shutdown = async () => {
+    if (isShuttingDown) return
+    isShuttingDown = true
+
+    await app.close()
+    await observability?.shutdown()
+  }
+
+  process.once('SIGINT', shutdown)
+  process.once('SIGTERM', shutdown)
+  process.once('SIGUSR2', shutdown)
 
   logger.verbose(`Application is running on port ${port}`)
 }
