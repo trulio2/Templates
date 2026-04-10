@@ -3,17 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: yarn dev
+    command: yarn dev:docker
     depends_on:
       postgres:
         condition: service_healthy
       mongodb:
         condition: service_healthy
     environment:
-      CHOKIDAR_INTERVAL: 500
-      CHOKIDAR_USEPOLLING: true
-      WATCHPACK_POLLING: true
-      WATCHPACK_POLLING_INTERVAL: 500
       DB_DATABASE: ${DB_DATABASE:-nest-db}
       DB_HOST: postgres
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
