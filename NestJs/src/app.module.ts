@@ -15,6 +15,9 @@ import {
   UsersModule
 } from '@/modules'
 
+const DB_RETRY_ATTEMPTS = Number.MAX_SAFE_INTEGER
+const DB_RETRY_DELAY_MS = 10000
+
 @Module({
   imports: [
     AuthModule,
@@ -28,7 +31,10 @@ import {
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         dbName: configService.getOrThrow<string>('MONGODB_DATABASE'),
-        uri: configService.getOrThrow<string>('MONGODB_URI')
+        retryAttempts: DB_RETRY_ATTEMPTS,
+        retryDelay: DB_RETRY_DELAY_MS,
+        uri: configService.getOrThrow<string>('MONGODB_URI'),
+        verboseRetryLog: false
       })
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -48,7 +54,12 @@ import {
     HealthModule,
     MongoDbModule,
     StreamsModule,
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRoot({
+      ...dataSourceOptions,
+      retryAttempts: DB_RETRY_ATTEMPTS,
+      retryDelay: DB_RETRY_DELAY_MS,
+      verboseRetryLog: false
+    }),
     UsersModule
   ]
 })
