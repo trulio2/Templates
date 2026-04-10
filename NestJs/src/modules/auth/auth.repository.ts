@@ -13,7 +13,7 @@ export class AuthRepository {
     private hashService: HashService
   ) {}
 
-  async signIn(signInDto: SignInDto): Promise<User> {
+  async signIn(signInDto: SignInDto): Promise<User | null> {
     const { username, password } = signInDto
     const user = await this.baseRepository.findOneBy({ username })
 

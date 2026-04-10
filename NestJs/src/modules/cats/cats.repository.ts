@@ -46,7 +46,7 @@ export class CatsRepository {
     return cats
   }
 
-  findOne(id: string, user: User): Promise<Cat> {
+  findOne(id: string, user: User): Promise<Cat | null> {
     return this.repository.findOneBy({ id, user })
   }
 

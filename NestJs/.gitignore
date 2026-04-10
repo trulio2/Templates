@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 AGENTS.md
+tsconfig.build.tsbuildinfo
 
 # OS
 .DS_Store
