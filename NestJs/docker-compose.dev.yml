@@ -2,7 +2,8 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+    command: yarn dev
     depends_on:
       postgres:
         condition: service_healthy
@@ -13,12 +14,15 @@ services:
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME:-postgres}
       JWT_SECRET: ${JWT_SECRET:-jwt-secret}
-      NODE_ENV: production
+      NODE_ENV: development
       OTEL_SERVICE_NAME: nest-js
       PORT: 3030
       SENTRY_DSN: ${SENTRY_DSN:-}
     ports:
       - '3030:3030'
+    volumes:
+      - .:/app
+      - /app/node_modules
 
   postgres:
     image: postgres:17-alpine
