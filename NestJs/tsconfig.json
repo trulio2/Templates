@@ -3,6 +3,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "outDir": "./dist",
     "types": ["node", "jest"],
     "module": "nodenext",
     "moduleResolution": "nodenext",

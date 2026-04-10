@@ -9,6 +9,7 @@ import {
 } from '@/mocks'
 import { CatsRepository } from './cats.repository'
 import { CatsService } from './cats.service'
+import { GetCatsFilterDto } from './dtos'
 
 jest.mock('./cats.repository')
 
@@ -63,7 +64,7 @@ describe('CatsService', () => {
     it('should find all cats without filter', async () => {
       mockRepository.findAll.mockResolvedValue([mockCat, mockCat])
 
-      expect(await service.findAll(undefined, mockUser)).toEqual([
+      expect(await service.findAll({} as GetCatsFilterDto, mockUser)).toEqual([
         mockCat,
         mockCat
       ])
