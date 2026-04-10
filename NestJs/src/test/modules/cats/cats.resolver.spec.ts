@@ -47,6 +47,10 @@ describe('CatsResolver', () => {
       const result = await resolver.create(mockCreateCatDto, mockUser)
 
       expect(result).toEqual(mockCat)
+      expect(mockService.create).toHaveBeenCalledWith(
+        mockCreateCatDto,
+        mockUser
+      )
     })
   })
 
@@ -57,6 +61,10 @@ describe('CatsResolver', () => {
       const result = await resolver.findAll(mockGetCatsFilterDto, mockUser)
 
       expect(result).toEqual([mockCat, mockCat])
+      expect(mockService.findAll).toHaveBeenCalledWith(
+        mockGetCatsFilterDto,
+        mockUser
+      )
     })
   })
 
@@ -67,6 +75,7 @@ describe('CatsResolver', () => {
       const result = await resolver.findOne('uuid', mockUser)
 
       expect(result).toEqual(mockCat)
+      expect(mockService.findOne).toHaveBeenCalledWith('uuid', mockUser)
     })
   })
 
@@ -77,6 +86,7 @@ describe('CatsResolver', () => {
       const result = await resolver.remove('uuid', mockUser)
 
       expect(result).toEqual(mockCat)
+      expect(mockService.remove).toHaveBeenCalledWith('uuid', mockUser)
     })
   })
 
@@ -87,6 +97,11 @@ describe('CatsResolver', () => {
       const result = await resolver.update('uuid', mockCreateCatDto, mockUser)
 
       expect(result).toEqual(mockCat)
+      expect(mockService.update).toHaveBeenCalledWith(
+        'uuid',
+        mockCreateCatDto,
+        mockUser
+      )
     })
   })
 })

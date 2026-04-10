@@ -39,6 +39,7 @@ describe('AuthController', () => {
       const result = await controller.signIn(mockSignInDto)
 
       expect(result).toEqual(mockToken)
+      expect(mockService.signIn).toHaveBeenCalledWith(mockSignInDto)
     })
 
     it('should throw an UnauthorizedException', async () => {
@@ -57,6 +58,7 @@ describe('AuthController', () => {
       const result = await controller.signUp(mockCreateUserDto)
 
       expect(result).toEqual(mockToken)
+      expect(mockService.signUp).toHaveBeenCalledWith(mockCreateUserDto)
     })
 
     it('should throw an error', async () => {

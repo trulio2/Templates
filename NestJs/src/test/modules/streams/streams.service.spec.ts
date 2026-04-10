@@ -48,6 +48,15 @@ describe('StreamsService', () => {
       const result = await service.findAll(mockUser)
 
       expect(result).toEqual([mockMessage, mockMessage])
+      expect(mockRepository.findAll).toHaveBeenCalledWith(mockUser)
+    })
+  })
+
+  describe('stream', () => {
+    it('should disconnect the client', async () => {
+      await service.stream(mockClient)
+
+      expect(mockClient.disconnect).toHaveBeenCalledTimes(1)
     })
   })
 })

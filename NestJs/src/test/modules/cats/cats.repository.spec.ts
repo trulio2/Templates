@@ -56,15 +56,27 @@ describe('CatsRepository', () => {
 
   describe('findAll', () => {
     it('should find all cats', async () => {
+      const where = jest.fn().mockReturnThis()
+      const andWhere = jest.fn().mockReturnThis()
+      const getMany = jest.fn().mockResolvedValue([mockCat, mockCat])
+
       jest.spyOn(mockTypeOrmRepository, 'createQueryBuilder').mockReturnValue({
-        where: jest.fn(),
-        andWhere: jest.fn(),
-        getMany: jest.fn().mockResolvedValue([mockCat, mockCat])
+        where,
+        andWhere,
+        getMany
       } as any)
 
       const result = await repository.findAll(mockGetCatsFilterDto, mockUser)
 
       expect(result).toEqual([mockCat, mockCat])
+      expect(where).toHaveBeenCalledWith({ user: mockUser })
+      expect(andWhere).toHaveBeenCalledWith(
+        '(LOWER(cat.name) LIKE LOWER(:name))',
+        { name: `%${mockGetCatsFilterDto.name}%` }
+      )
+      expect(andWhere).toHaveBeenCalledWith('cat.age = :age', {
+        age: mockGetCatsFilterDto.age
+      })
     })
   })
 

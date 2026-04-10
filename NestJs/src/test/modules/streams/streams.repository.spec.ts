@@ -40,25 +40,37 @@ describe('StreamsRepository', () => {
 
   describe('create', () => {
     it('should create a message', async () => {
+      jest.spyOn(mockTypeOrmRepository, 'create').mockReturnValue(mockMessage)
       jest.spyOn(mockTypeOrmRepository, 'save').mockResolvedValue(mockMessage)
 
       const result = await repository.create(mockCreateMessageDto, mockUser)
 
       expect(result).toEqual(mockMessage)
+      expect(mockTypeOrmRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          user: mockUser
+        })
+      )
     })
   })
 
   describe('findAll', () => {
     it('should return an array of messages', async () => {
+      const where = jest.fn().mockReturnThis()
+      const orderBy = jest.fn().mockReturnThis()
+      const getMany = jest.fn().mockResolvedValue([mockMessage, mockMessage])
+
       jest.spyOn(mockTypeOrmRepository, 'createQueryBuilder').mockReturnValue({
-        where: jest.fn(),
-        orderBy: jest.fn(),
-        getMany: jest.fn().mockResolvedValue([mockMessage, mockMessage])
+        where,
+        orderBy,
+        getMany
       } as any)
 
       const result = await repository.findAll(mockUser)
 
       expect(result).toEqual([mockMessage, mockMessage])
+      expect(where).toHaveBeenCalledWith({ user: mockUser })
+      expect(orderBy).toHaveBeenCalledWith('message.createdAt', 'ASC')
     })
   })
 })

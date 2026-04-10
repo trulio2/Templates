@@ -58,30 +58,59 @@ describe('AuthRepository', () => {
       const result = await repository.signIn(mockSignInDto)
 
       expect(result).toEqual(mockUser)
+      expect(mockTypeOrmRepository.findOneBy).toHaveBeenCalledWith({
+        username: mockSignInDto.username
+      })
+      expect(mockHashService.compare).toHaveBeenCalledWith(
+        mockSignInDto.password,
+        mockUser.password
+      )
     })
 
     it('should return null for user not found', async () => {
       const result = await repository.signIn(mockSignInDto)
 
       expect(result).toEqual(null)
+      expect(mockTypeOrmRepository.findOneBy).toHaveBeenCalledWith({
+        username: mockSignInDto.username
+      })
+      expect(mockHashService.compare).not.toHaveBeenCalled()
     })
 
     it('should return null for incorrect password', async () => {
       jest.spyOn(mockTypeOrmRepository, 'findOneBy').mockResolvedValue(mockUser)
+      mockHashService.compare.mockResolvedValue(false)
 
       const result = await repository.signIn(mockSignInDto)
 
       expect(result).toEqual(null)
+      expect(mockTypeOrmRepository.findOneBy).toHaveBeenCalledWith({
+        username: mockSignInDto.username
+      })
+      expect(mockHashService.compare).toHaveBeenCalledWith(
+        mockSignInDto.password,
+        mockUser.password
+      )
     })
   })
 
   describe('signUp', () => {
     it('should return a user', async () => {
+      jest.spyOn(mockHashService, 'hash').mockResolvedValue('hashed-password')
+      jest.spyOn(mockTypeOrmRepository, 'create').mockReturnValue(mockUser)
       jest.spyOn(mockTypeOrmRepository, 'save').mockResolvedValue(mockUser)
 
       const result = await repository.signUp(mockCreateUserDto)
 
       expect(result).toEqual(mockUser)
+      expect(mockHashService.hash).toHaveBeenCalledWith(
+        mockCreateUserDto.password
+      )
+      expect(mockTypeOrmRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          password: 'hashed-password'
+        })
+      )
     })
   })
 })

@@ -37,6 +37,7 @@ describe('UsersService', () => {
       const result = await service.findAll()
 
       expect(result).toEqual([mockUser, mockUser])
+      expect(mockRepository.findAll).toHaveBeenCalledWith()
     })
   })
 })

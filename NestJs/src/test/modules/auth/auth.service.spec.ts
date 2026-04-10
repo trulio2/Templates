@@ -57,14 +57,21 @@ describe('AuthService', () => {
       const result = await service.signIn(mockSignInDto)
 
       expect(result).toEqual({ accessToken: 'token' })
+      expect(mockRepository.signIn).toHaveBeenCalledWith(mockSignInDto)
+      expect(mockJwtService.sign).toHaveBeenCalledWith({
+        username: mockUser.username
+      })
     })
 
     it('should throw an error', async () => {
       mockRepository.signIn.mockResolvedValue(null)
 
-      expect(service.signIn(mockSignInDto)).rejects.toThrow(
+      await expect(service.signIn(mockSignInDto)).rejects.toThrow(
         UnauthorizedException
       )
+
+      expect(mockRepository.signIn).toHaveBeenCalledWith(mockSignInDto)
+      expect(mockJwtService.sign).not.toHaveBeenCalled()
     })
   })
 
@@ -76,12 +83,16 @@ describe('AuthService', () => {
       const result = await service.signUp(mockCreateUserDto)
 
       expect(result).toEqual({ accessToken: 'token' })
+      expect(mockRepository.signUp).toHaveBeenCalledWith(mockCreateUserDto)
+      expect(mockJwtService.sign).toHaveBeenCalledWith({
+        username: mockUser.username
+      })
     })
 
     it('should throw an error', async () => {
       mockRepository.signUp.mockRejectedValue({ code: '23505' })
 
-      expect(service.signUp(mockCreateUserDto)).rejects.toThrow(
+      await expect(service.signUp(mockCreateUserDto)).rejects.toThrow(
         ConflictException
       )
     })
@@ -89,7 +100,7 @@ describe('AuthService', () => {
     it('should throw an error', async () => {
       mockRepository.signUp.mockRejectedValue({ code: '12345' })
 
-      expect(service.signUp(mockCreateUserDto)).rejects.toThrow(
+      await expect(service.signUp(mockCreateUserDto)).rejects.toThrow(
         InternalServerErrorException
       )
     })

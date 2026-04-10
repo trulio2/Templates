@@ -39,6 +39,7 @@ describe('UsersController', () => {
       const result = await controller.findAll(mockUser)
 
       expect(result).toEqual([mockUser, mockUser])
+      expect(mockService.findAll).toHaveBeenCalledWith()
     })
   })
 })

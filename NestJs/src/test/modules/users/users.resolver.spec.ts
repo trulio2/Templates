@@ -37,6 +37,7 @@ describe('UsersResolver', () => {
       const result = await resolver.findAllUsers(mockUser)
 
       expect(result).toEqual([mockUser, mockUser])
+      expect(mockService.findAll).toHaveBeenCalledWith()
     })
   })
 })

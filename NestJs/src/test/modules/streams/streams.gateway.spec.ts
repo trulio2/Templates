@@ -49,6 +49,7 @@ describe('StreamsGateway', () => {
         mockMessage,
         mockMessage
       ])
+      expect(mockService.findAll).toHaveBeenCalledWith(mockUser)
     })
   })
 
