@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { Socket } from 'socket.io'
-import { mockMessage, mockStreamMessage, mockUser } from '@/mocks'
+import { mockMessage, mockUser } from '@/mocks'
 import { StreamsGateway } from './streams.gateway'
 import { StreamsService } from './streams.service'
 
@@ -56,11 +56,7 @@ describe('StreamsGateway', () => {
     it('should call stream', () => {
       gateWay.handleStream(mockClient)
 
-      expect(mockService.stream).toHaveBeenCalledWith(
-        mockStreamMessage,
-        mockClient,
-        mockUser
-      )
+      expect(mockService.stream).toHaveBeenCalledWith(mockClient)
     })
   })
 })
