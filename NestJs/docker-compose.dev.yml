@@ -7,12 +7,16 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      mongodb:
+        condition: service_healthy
     environment:
       DB_DATABASE: ${DB_DATABASE:-nest-db}
       DB_HOST: postgres
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME:-postgres}
+      MONGODB_DATABASE: ${MONGODB_DATABASE:-nest-mongo}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017}
       JWT_SECRET: ${JWT_SECRET:-jwt-secret}
       NODE_ENV: development
       OTEL_SERVICE_NAME: nest-js
@@ -44,5 +48,22 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  mongodb:
+    image: mongo:8.0
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'mongosh --quiet --eval "db.adminCommand({ ping: 1 }).ok"'
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-data:/data/db
+
 volumes:
   postgres-data:
+  mongodb-data:

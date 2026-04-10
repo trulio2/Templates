@@ -6,6 +6,8 @@ export const configValidationSchema = Joi.object({
   DB_PASSWORD: Joi.string().required(),
   DB_PORT: Joi.number().default(5432).required(),
   DB_USERNAME: Joi.string().required(),
+  MONGODB_DATABASE: Joi.string().default('nest-mongo').required(),
+  MONGODB_URI: Joi.string().uri().required(),
   JWT_SECRET: Joi.string().required(),
   OTEL_EXPORTER_OTLP_ENDPOINT: Joi.string().uri().optional(),
   OTEL_SERVICE_NAME: Joi.string().default('nest-js').optional(),

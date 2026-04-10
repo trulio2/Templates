@@ -1,6 +1,7 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { MongooseModule } from '@nestjs/mongoose'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { configValidationSchema } from '@/config.schema'
@@ -9,6 +10,7 @@ import {
   AuthModule,
   CatsModule,
   HealthModule,
+  MongoDbModule,
   StreamsModule,
   UsersModule
 } from '@/modules'
@@ -20,6 +22,14 @@ import {
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       validationSchema: configValidationSchema
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        dbName: configService.getOrThrow<string>('MONGODB_DATABASE'),
+        uri: configService.getOrThrow<string>('MONGODB_URI')
+      })
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -36,6 +46,7 @@ import {
       }
     }),
     HealthModule,
+    MongoDbModule,
     StreamsModule,
     TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule
