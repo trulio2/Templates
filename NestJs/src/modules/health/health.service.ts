@@ -6,11 +6,11 @@ export class HealthService {
   constructor(private readonly healthRepository: HealthRepository) {}
 
   async checkHealth() {
-    const postgre = await this.healthRepository.checkDatabase()
+    const postgres = await this.healthRepository.checkDatabase()
     const mongodb = await this.healthRepository.checkMongoDb()
 
     return {
-      postgre,
+      postgres,
       mongodb,
       service: 'up',
       timestamp: new Date().toISOString(),

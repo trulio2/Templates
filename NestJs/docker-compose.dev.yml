@@ -12,6 +12,8 @@ services:
     environment:
       CHOKIDAR_INTERVAL: 500
       CHOKIDAR_USEPOLLING: true
+      WATCHPACK_POLLING: true
+      WATCHPACK_POLLING_INTERVAL: 500
       DB_DATABASE: ${DB_DATABASE:-nest-db}
       DB_HOST: postgres
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
@@ -26,6 +28,8 @@ services:
       SENTRY_DSN: ${SENTRY_DSN:-}
     ports:
       - '3030:3030'
+    stdin_open: true
+    tty: true
     volumes:
       - .:/app
       - /app/node_modules
