@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { MongoDbController } from './mongodb.controller'
 import { MongoDbRecord, MongoDbRecordSchema } from './mongodb-record.schema'
+import { MongoDbRepository } from './mongodb.repository'
 import { MongoDbService } from './mongodb.service'
 
 @Module({
@@ -11,6 +12,7 @@ import { MongoDbService } from './mongodb.service'
     ])
   ],
   controllers: [MongoDbController],
-  providers: [MongoDbService]
+  providers: [MongoDbRepository, MongoDbService],
+  exports: [MongoDbRepository]
 })
 export class MongoDbModule {}

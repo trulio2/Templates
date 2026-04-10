@@ -1,6 +1,7 @@
 export { AuthModule } from './auth/auth.module'
 export { CatsModule } from './cats/cats.module'
 export { HealthModule } from './health'
+export { HealthRepository } from './health'
 export { MongoDbModule } from './mongodb'
 export { StreamsModule } from './streams/streams.module'
 export { UsersModule } from './users/users.module'
