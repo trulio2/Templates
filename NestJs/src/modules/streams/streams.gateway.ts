@@ -33,11 +33,7 @@ export class StreamsGateway {
 
   @SubscribeMessage('stream')
   @UseFilters(WsAndHttpExceptionFilter)
-  handleStream(
-    @MessageBody() streamMessageDto: StreamMessageDto,
-    @ConnectedSocket() client: Socket,
-    @GetUserWs() user: User
-  ): void {
-    this.streamsService.stream(streamMessageDto, client, user)
+  handleStream(@ConnectedSocket() client: Socket): void {
+    this.streamsService.stream(client)
   }
 }

@@ -6,11 +6,11 @@ export class CreateCatDto {
   @Field()
   @IsString()
   @MinLength(1)
-  name: string
+  name!: string
 
   @Field()
   @IsNumber()
   @Min(0)
   @Max(100)
-  age: number
+  age!: number
 }

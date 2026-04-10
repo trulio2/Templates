@@ -1,21 +1,17 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Role } from '../../../types'
 import { User } from '../../auth/entities'
 
 @Entity()
 export class Message {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id!: string
 
   @Column()
-  content: string
-
-  @Column()
-  role: Role
+  content!: string
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date
+  createdAt!: Date
 
   @ManyToOne(() => User, (user) => user.messages)
-  user: User
+  user!: User
 }

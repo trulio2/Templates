@@ -4,23 +4,23 @@ import { CatType, UserRole } from './'
 @ObjectType('User')
 export class UserType {
   @Field(() => ID)
-  id: string
+  id!: string
 
   @Field()
-  username: string
+  username!: string
 
   @Field()
-  role: UserRole
+  role!: UserRole
 
   @Field()
-  email: string
+  email!: string
 
   @Field()
-  firstName: string
+  firstName!: string
 
   @Field()
-  lastName: string
+  lastName!: string
 
   @Field(() => [CatType])
-  cats: CatType[]
+  cats!: CatType[]
 }

@@ -4,14 +4,14 @@ import { User } from '../../auth/entities'
 @Entity()
 export class Cat {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id!: string
 
   @Column()
-  name: string
+  name!: string
 
   @Column()
-  age: number
+  age!: number
 
   @ManyToOne(() => User, (user) => user.cats)
-  user: User
+  user!: User
 }

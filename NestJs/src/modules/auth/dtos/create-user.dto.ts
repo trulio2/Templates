@@ -12,10 +12,10 @@ export class CreateUserDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  username: string
+  username!: string
 
   @IsEnum(UserRole)
-  role: UserRole
+  role!: UserRole
 
   @IsString()
   @MinLength(8)
@@ -23,19 +23,19 @@ export class CreateUserDto {
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'Weak Password'
   })
-  password: string
+  password!: string
 
   @IsString()
   @IsEmail()
-  email: string
+  email!: string
 
   @IsString()
   @MinLength(3)
   @MaxLength(30)
-  firstName: string
+  firstName!: string
 
   @IsString()
   @MinLength(3)
   @MaxLength(30)
-  lastName: string
+  lastName!: string
 }

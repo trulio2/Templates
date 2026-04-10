@@ -1,10 +1,6 @@
-import { IsEnum, IsString } from 'class-validator'
-import { Role } from '../../../types'
+import { IsString } from 'class-validator'
 
 export class CreateMessageDto {
   @IsString()
-  content: string
-
-  @IsEnum(Role)
-  role: Role
+  content!: string
 }

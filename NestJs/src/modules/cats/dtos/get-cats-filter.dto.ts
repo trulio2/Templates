@@ -6,12 +6,12 @@ export class GetCatsFilterDto {
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  name: string
+  name!: string
 
   @Field({ nullable: true })
   @IsNumber()
   @Min(0)
   @Max(100)
   @IsOptional()
-  age: number
+  age!: number
 }

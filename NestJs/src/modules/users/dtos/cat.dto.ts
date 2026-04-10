@@ -2,8 +2,8 @@ import { Expose } from 'class-transformer'
 
 export class CatDto {
   @Expose()
-  name: string
+  name!: string
 
   @Expose()
-  age: number
+  age!: number
 }

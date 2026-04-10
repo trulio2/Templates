@@ -3,11 +3,11 @@ import { ObjectType, Field, ID } from '@nestjs/graphql'
 @ObjectType('Cat')
 export class CatType {
   @Field(() => ID)
-  id: string
+  id!: string
 
   @Field()
-  name: string
+  name!: string
 
   @Field()
-  age: number
+  age!: number
 }

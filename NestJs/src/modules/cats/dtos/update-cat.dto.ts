@@ -14,12 +14,12 @@ export class UpdateCatDto {
   @IsString()
   @MinLength(1)
   @IsOptional()
-  name: string
+  name!: string
 
   @Field({ nullable: true })
   @IsNumber()
   @Min(0)
   @Max(100)
   @IsOptional()
-  age: number
+  age!: number
 }

@@ -54,7 +54,7 @@ describe('StreamsGateway', () => {
 
   describe('stream', () => {
     it('should call stream', () => {
-      gateWay.handleStream(mockStreamMessage, mockClient, mockUser)
+      gateWay.handleStream(mockClient)
 
       expect(mockService.stream).toHaveBeenCalledWith(
         mockStreamMessage,

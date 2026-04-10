@@ -6,31 +6,31 @@ import { Message } from '../../streams/entities'
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id!: string
 
   @Column({
     unique: true
   })
-  username: string
+  username!: string
 
   @Column()
-  role: UserRole
+  role!: UserRole
 
   @Column()
-  password: string
+  password!: string
 
   @Column()
-  email: string
+  email!: string
 
   @Column()
-  firstName: string
+  firstName!: string
 
   @Column()
-  lastName: string
+  lastName!: string
 
   @OneToMany(() => Cat, (cat) => cat.user)
-  cats: Cat[]
+  cats!: Cat[]
 
   @OneToMany(() => Message, (message) => message.user)
-  messages: Message[]
+  messages!: Message[]
 }

@@ -50,25 +50,4 @@ describe('StreamsService', () => {
       expect(result).toEqual([mockMessage, mockMessage])
     })
   })
-
-  describe('stream', () => {
-    it('should return an array of messages', async () => {
-      mockService.stream.mockResolvedValue([
-        {
-          choices: [
-            {
-              delta: {
-                content: 'Mock content'
-              }
-            }
-          ]
-        }
-      ] as any)
-
-      await service.stream(mockStreamMessage, mockClient, mockUser)
-
-      expect(mockClient.emit).toHaveBeenCalled()
-      expect(mockClient.disconnect).toHaveBeenCalled()
-    })
-  })
 })

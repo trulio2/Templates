@@ -3,21 +3,21 @@ import { CatDto } from './'
 
 export class UserDto {
   @Expose()
-  username: string
+  username!: string
 
   @Expose()
-  firstName: string
+  firstName!: string
 
   @Expose()
-  lastName: string
+  lastName!: string
 
   @Expose()
-  role: string
+  role!: string
 
   @Expose()
-  email: string
+  email!: string
 
   @Expose()
   @Type(() => CatDto)
-  cats: CatDto[]
+  cats!: CatDto[]
 }
