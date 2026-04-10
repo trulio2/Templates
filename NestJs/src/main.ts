@@ -1,9 +1,9 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { RequestTimingInterceptor } from '@/interceptors'
+import { JsonLogger } from '@/observability/json-logger'
+import { startObservability } from '@/observability/observability'
 import { AppModule } from './app.module'
-import { RequestTimingInterceptor } from './interceptors'
-import { JsonLogger } from './observability/json-logger'
-import { startObservability } from './observability/observability'
 
 async function bootstrap() {
   const port = Number(process.env.PORT ?? 3000)
