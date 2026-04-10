@@ -24,7 +24,7 @@ import { AuthModule, CatsModule, StreamsModule, UsersModule } from '@/modules'
           locations: error.locations,
           path: error.path,
           extensions: {
-            code: error.extensions.code
+            code: error.extensions?.code
           }
         }
       }
