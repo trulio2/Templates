@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-nest-db}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-nest-db}'
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_DATABASE: ${DB_DATABASE:-nest-db}
+      DB_HOST: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-jwt-secret}
+      NODE_ENV: production
+      OTEL_SERVICE_NAME: nest-js
+      PORT: 3030
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    ports:
+      - '3030:3030'
+
+volumes:
+  postgres-data:

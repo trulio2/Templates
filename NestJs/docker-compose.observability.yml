@@ -1,24 +1,4 @@
 services:
-  postgres:
-    image: postgres:17-alpine
-    environment:
-      POSTGRES_DB: ${DB_DATABASE:-nest-db}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_USER: ${DB_USERNAME:-postgres}
-    healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-nest-db}'
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    ports:
-      - '5432:5432'
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.121.0
     command: ['--config=/etc/otelcol-contrib/config.yaml']
@@ -96,38 +76,8 @@ services:
       - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
       - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
 
-  backend:
-    image: node:22-alpine
-    working_dir: /app
-    command: sh -c "corepack enable && yarn dev"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      otel-collector:
-        condition: service_started
-    environment:
-      DB_DATABASE: ${DB_DATABASE:-nest-db}
-      DB_HOST: postgres
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_PORT: 5432
-      DB_USERNAME: ${DB_USERNAME:-postgres}
-      JWT_SECRET: ${JWT_SECRET:-jwt-secret}
-      NODE_ENV: development
-      OTEL_EXPORTER_OTLP_ENDPOINT: ${BACKEND_OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
-      OTEL_EXPORTER_OTLP_HEADERS: ''
-      OTEL_SERVICE_NAME: nest-js
-      PORT: 3030
-      SENTRY_DSN: ${SENTRY_DSN:-}
-    ports:
-      - '3030:3030'
-    volumes:
-      - .:/app
-      - yarn-cache:/usr/local/share/.cache/yarn
-
 volumes:
   grafana-data:
   loki-data:
-  postgres-data:
   prometheus-data:
   tempo-data:
-  yarn-cache:
