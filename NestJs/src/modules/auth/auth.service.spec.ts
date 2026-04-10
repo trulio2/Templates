@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockCreateUserDto, mockSignInDto, mockUser } from '../../mocks'
+import { mockCreateUserDto, mockSignInDto, mockUser } from '@/mocks'
 import { AuthRepository } from './auth.repository'
 import { AuthService } from './auth.service'
 

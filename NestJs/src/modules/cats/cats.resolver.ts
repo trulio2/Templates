@@ -1,9 +1,9 @@
 import { Logger, ParseUUIDPipe, UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { GetUserGraphQl } from '../../decorators'
-import { GraphqlGuard } from '../../guards'
-import { CatType, RemoveCatType } from '../../types'
-import { User } from '../auth/entities'
+import { GetUserGraphQl } from '@/decorators'
+import { GraphqlGuard } from '@/guards'
+import { CatType, RemoveCatType } from '@/types'
+import { User } from '@/modules/auth/entities'
 import { CatsService } from './cats.service'
 import { CreateCatDto, GetCatsFilterDto, UpdateCatDto } from './dtos'
 

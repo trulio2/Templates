@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { mockCreateMessageDto, mockMessage, mockUser } from '../../mocks'
+import { mockCreateMessageDto, mockMessage, mockUser } from '@/mocks'
 import { Message } from './entities'
 import { StreamsRepository } from './streams.repository'
 

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { mockCreateUserDto, mockSignInDto, mockUser } from '../../mocks'
+import { mockCreateUserDto, mockSignInDto, mockUser } from '@/mocks'
 import { AuthRepository } from './auth.repository'
 import { User } from './entities'
 import { HashService } from './hash'

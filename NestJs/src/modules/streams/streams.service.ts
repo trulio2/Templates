@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Socket } from 'socket.io'
-import { User } from '../auth/entities'
+import { User } from '@/modules/auth/entities'
 import { Message } from './entities'
 import { StreamsRepository } from './streams.repository'
 

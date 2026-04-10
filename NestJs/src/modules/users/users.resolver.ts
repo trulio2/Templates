@@ -1,9 +1,9 @@
 import { Logger, UseGuards } from '@nestjs/common'
 import { Query, Resolver } from '@nestjs/graphql'
-import { GetUserGraphQl, Role } from '../../decorators'
-import { GraphqlGuard, RoleGuard } from '../../guards'
-import { UserType } from '../../types'
-import { User } from '../auth/entities'
+import { GetUserGraphQl, Role } from '@/decorators'
+import { GraphqlGuard, RoleGuard } from '@/guards'
+import { UserType } from '@/types'
+import { User } from '@/modules/auth/entities'
 import { UsersService } from './users.service'
 
 @Resolver()

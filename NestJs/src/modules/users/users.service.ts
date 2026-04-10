@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { User } from '../auth/entities'
+import { User } from '@/modules/auth/entities'
 import { UsersRepository } from './users.repository'
 
 @Injectable()

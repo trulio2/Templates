@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength
 } from 'class-validator'
-import { UserRole } from '../../../types'
+import { UserRole } from '@/types'
 
 export class CreateUserDto {
   @IsString()

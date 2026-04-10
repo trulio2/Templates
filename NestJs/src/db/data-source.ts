@@ -1,8 +1,8 @@
 import { DataSource, DataSourceOptions } from 'typeorm'
 import 'dotenv/config'
-import { User } from '../modules/auth/entities'
-import { Cat } from '../modules/cats/entities'
-import { Message } from '../modules/streams/entities'
+import { User } from '@/modules/auth/entities'
+import { Cat } from '@/modules/cats/entities'
+import { Message } from '@/modules/streams/entities'
 
 const isProduction = process.env.NODE_ENV === 'prod'
 

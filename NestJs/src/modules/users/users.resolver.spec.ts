@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockUser } from '../../mocks'
+import { mockUser } from '@/mocks'
 import { UsersResolver } from './users.resolver'
 import { UsersService } from './users.service'
 

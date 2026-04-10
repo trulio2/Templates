@@ -1,6 +1,6 @@
 import { PassportModule } from '@nestjs/passport'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockUser } from '../../mocks'
+import { mockUser } from '@/mocks'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
 

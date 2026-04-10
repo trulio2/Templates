@@ -1,9 +1,9 @@
 import { Controller, Get, Logger, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
-import { GetUser, Role } from '../../decorators'
-import { RoleGuard } from '../../guards'
-import { Serialize } from '../../interceptors'
-import { User } from '../auth/entities'
+import { GetUser, Role } from '@/decorators'
+import { RoleGuard } from '@/guards'
+import { Serialize } from '@/interceptors'
+import { User } from '@/modules/auth/entities'
 import { UserDto } from './dtos'
 import { UsersService } from './users.service'
 

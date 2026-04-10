@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { Socket } from 'socket.io'
-import { mockMessage, mockStreamMessage, mockUser } from '../../mocks'
+import { mockMessage, mockStreamMessage, mockUser } from '@/mocks'
 import { StreamsRepository } from './streams.repository'
 import { StreamsService } from './streams.service'
 

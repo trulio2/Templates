@@ -6,7 +6,7 @@ import {
   mockCreateCatDto,
   mockGetCatsFilterDto,
   mockUser
-} from '../../mocks'
+} from '@/mocks'
 import { CatsRepository } from './cats.repository'
 import { Cat } from './entities'
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { User } from '../auth/entities'
+import { User } from '@/modules/auth/entities'
 import { CreateMessageDto } from './dtos'
 import { Message } from './entities'
 

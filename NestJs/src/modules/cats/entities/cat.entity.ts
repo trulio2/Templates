@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { User } from '../../auth/entities'
+import { User } from '@/modules/auth/entities'
 
 @Entity()
 export class Cat {
