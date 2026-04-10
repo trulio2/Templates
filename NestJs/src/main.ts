@@ -7,9 +7,17 @@ import { RequestTimingInterceptor } from './interceptors'
 
 async function bootstrap() {
   const port = Number(process.env.PORT ?? 3000)
-  const observability = await startObservability()
   const logger = new JsonLogger()
   let isShuttingDown = false
+  let observability: { shutdown: () => Promise<void> } | undefined
+
+  startObservability()
+    .then((runtime) => {
+      observability = runtime
+    })
+    .catch((error: unknown) => {
+      logger.error(error instanceof Error ? error : new Error(String(error)))
+    })
 
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true
@@ -30,7 +38,7 @@ async function bootstrap() {
     isShuttingDown = true
 
     await app.close()
-    await observability.shutdown()
+    await observability?.shutdown()
   }
 
   process.once('SIGINT', shutdown)

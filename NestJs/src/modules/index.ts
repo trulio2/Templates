@@ -1,4 +1,5 @@
 export { AuthModule } from './auth/auth.module'
 export { CatsModule } from './cats/cats.module'
+export { HealthModule } from './health'
 export { StreamsModule } from './streams/streams.module'
 export { UsersModule } from './users/users.module'

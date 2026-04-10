@@ -5,7 +5,13 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { configValidationSchema } from '@/config.schema'
 import { dataSourceOptions } from '@/db/data-source'
-import { AuthModule, CatsModule, StreamsModule, UsersModule } from '@/modules'
+import {
+  AuthModule,
+  CatsModule,
+  HealthModule,
+  StreamsModule,
+  UsersModule
+} from '@/modules'
 
 @Module({
   imports: [
@@ -29,6 +35,7 @@ import { AuthModule, CatsModule, StreamsModule, UsersModule } from '@/modules'
         }
       }
     }),
+    HealthModule,
     StreamsModule,
     TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule
