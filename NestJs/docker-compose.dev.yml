@@ -18,7 +18,7 @@ services:
       DB_PORT: 5432
       DB_USERNAME: ${DB_USERNAME:-postgres}
       MONGODB_DATABASE: ${MONGODB_DATABASE:-nest-mongo}
-      MONGODB_URI: ${MONGODB_URI:-mongodb://mongodb:27017}
+      MONGODB_URI: mongodb://mongodb:27017
       JWT_SECRET: ${JWT_SECRET:-jwt-secret}
       NODE_ENV: development
       OTEL_SERVICE_NAME: nest-js
