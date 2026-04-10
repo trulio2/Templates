@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: yarn dev:docker
     depends_on:
       postgres:
         condition: service_healthy
