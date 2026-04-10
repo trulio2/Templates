@@ -27,34 +27,40 @@ const createOtlpUrl = (
 }
 
 export async function startObservability(): Promise<ObservabilityRuntime> {
-  const otlpBaseUrl = process.env.OTEL_EXPORTER_OTLP_ENDPOINT
-  const sentryDsn = process.env.SENTRY_DSN
+  try {
+    const otlpBaseUrl = process.env.OTEL_EXPORTER_OTLP_ENDPOINT
+    const sentryDsn = process.env.SENTRY_DSN
 
-  if (sentryDsn) {
-    Sentry.init({
-      dsn: sentryDsn,
-      environment: process.env.NODE_ENV,
-      integrations: []
-    })
-  }
-
-  const sdk = new NodeSDK({
-    traceExporter: new OTLPTraceExporter({
-      url: createOtlpUrl(otlpBaseUrl, 'traces')
-    }),
-    metricReader: new PeriodicExportingMetricReader({
-      exporter: new OTLPMetricExporter({
-        url: createOtlpUrl(otlpBaseUrl, 'metrics')
+    if (sentryDsn) {
+      Sentry.init({
+        dsn: sentryDsn,
+        environment: process.env.NODE_ENV,
+        integrations: []
       })
-    }),
-    instrumentations: [getNodeAutoInstrumentations()]
-  })
+    }
 
-  await sdk.start()
+    const sdk = new NodeSDK({
+      traceExporter: new OTLPTraceExporter({
+        url: createOtlpUrl(otlpBaseUrl, 'traces')
+      }),
+      metricReader: new PeriodicExportingMetricReader({
+        exporter: new OTLPMetricExporter({
+          url: createOtlpUrl(otlpBaseUrl, 'metrics')
+        })
+      }),
+      instrumentations: [getNodeAutoInstrumentations()]
+    })
 
-  return {
-    shutdown: async () => {
-      await sdk.shutdown()
+    await sdk.start()
+
+    return {
+      shutdown: async () => {
+        await sdk.shutdown()
+      }
+    }
+  } catch {
+    return {
+      shutdown: async () => {}
     }
   }
 }

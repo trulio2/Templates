@@ -9,6 +9,6 @@ export const configValidationSchema = Joi.object({
   JWT_SECRET: Joi.string().required(),
   OTEL_EXPORTER_OTLP_ENDPOINT: Joi.string().uri().optional(),
   OTEL_SERVICE_NAME: Joi.string().default('nest-js').optional(),
-  SENTRY_DSN: Joi.string().uri().optional(),
+  SENTRY_DSN: Joi.string().uri().allow('').optional(),
   PORT: Joi.number().default(3000)
 })
