@@ -43,6 +43,7 @@ async function bootstrap() {
 
   process.once('SIGINT', shutdown)
   process.once('SIGTERM', shutdown)
+  process.once('SIGUSR2', shutdown)
 
   logger.verbose(`Application is running on port ${port}`)
 }
