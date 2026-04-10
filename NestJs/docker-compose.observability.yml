@@ -116,10 +116,10 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: ${BACKEND_OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
       OTEL_EXPORTER_OTLP_HEADERS: ''
       OTEL_SERVICE_NAME: nest-js
-      PORT: 3000
+      PORT: 3030
       SENTRY_DSN: ${SENTRY_DSN:-}
     ports:
-      - '3000:3000'
+      - '3030:3030'
     volumes:
       - .:/app
       - yarn-cache:/usr/local/share/.cache/yarn
