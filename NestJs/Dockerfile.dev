@@ -4,6 +4,7 @@ WORKDIR /app
 
 ENV PORT=3030
 ENV CHOKIDAR_USEPOLLING=true
+ENV CHOKIDAR_INTERVAL=500
 
 COPY package.json yarn.lock ./
 
