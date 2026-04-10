@@ -6,12 +6,12 @@ import {
   mockGetCatsFilterDto,
   mockUpdateCatDto,
   mockUser
-} from '@/mocks'
-import { CatsRepository } from './cats.repository'
-import { CatsService } from './cats.service'
-import { GetCatsFilterDto } from './dtos'
+} from '@/test/mocks'
+import { CatsRepository } from '@/modules/cats/cats.repository'
+import { CatsService } from '@/modules/cats/cats.service'
+import { GetCatsFilterDto } from '@/modules/cats/dtos'
 
-jest.mock('./cats.repository')
+jest.mock('@/modules/cats/cats.repository')
 
 describe('CatsService', () => {
   let service: CatsService

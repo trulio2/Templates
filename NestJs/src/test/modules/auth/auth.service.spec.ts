@@ -5,11 +5,11 @@ import {
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockCreateUserDto, mockSignInDto, mockUser } from '@/mocks'
-import { AuthRepository } from './auth.repository'
-import { AuthService } from './auth.service'
+import { mockCreateUserDto, mockSignInDto, mockUser } from '@/test/mocks'
+import { AuthRepository } from '@/modules/auth/auth.repository'
+import { AuthService } from '@/modules/auth/auth.service'
 
-jest.mock('./auth.repository')
+jest.mock('@/modules/auth/auth.repository')
 
 describe('AuthService', () => {
   let service: AuthService

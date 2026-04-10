@@ -1,10 +1,10 @@
 import { PassportModule } from '@nestjs/passport'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockUser } from '@/mocks'
-import { UsersController } from './users.controller'
-import { UsersService } from './users.service'
+import { mockUser } from '@/test/mocks'
+import { UsersController } from '@/modules/users/users.controller'
+import { UsersService } from '@/modules/users/users.service'
 
-jest.mock('./users.service')
+jest.mock('@/modules/users/users.service')
 
 describe('UsersController', () => {
   let controller: UsersController

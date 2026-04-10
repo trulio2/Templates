@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { Socket } from 'socket.io'
-import { mockMessage, mockStreamMessage, mockUser } from '@/mocks'
-import { StreamsRepository } from './streams.repository'
-import { StreamsService } from './streams.service'
+import { mockMessage, mockUser } from '@/test/mocks'
+import { StreamsRepository } from '@/modules/streams/streams.repository'
+import { StreamsService } from '@/modules/streams/streams.service'
 
-jest.mock('./streams.repository')
+jest.mock('@/modules/streams/streams.repository')
 
 describe('StreamsService', () => {
   let service: StreamsService

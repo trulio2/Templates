@@ -6,9 +6,9 @@ import {
   mockCreateCatDto,
   mockGetCatsFilterDto,
   mockUser
-} from '@/mocks'
-import { CatsRepository } from './cats.repository'
-import { Cat } from './entities'
+} from '@/test/mocks'
+import { CatsRepository } from '@/modules/cats/cats.repository'
+import { Cat } from '@/modules/cats/entities'
 
 describe('CatsRepository', () => {
   let repository: CatsRepository

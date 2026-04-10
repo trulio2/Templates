@@ -4,11 +4,11 @@ import {
   mockCreateCatDto,
   mockGetCatsFilterDto,
   mockUser
-} from '@/mocks'
-import { CatsResolver } from './cats.resolver'
-import { CatsService } from './cats.service'
+} from '@/test/mocks'
+import { CatsResolver } from '@/modules/cats/cats.resolver'
+import { CatsService } from '@/modules/cats/cats.service'
 
-jest.mock('./cats.service')
+jest.mock('@/modules/cats/cats.service')
 
 describe('CatsResolver', () => {
   let resolver: CatsResolver

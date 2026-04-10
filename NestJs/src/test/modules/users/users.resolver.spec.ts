@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockUser } from '@/mocks'
-import { UsersResolver } from './users.resolver'
-import { UsersService } from './users.service'
+import { mockUser } from '@/test/mocks'
+import { UsersResolver } from '@/modules/users/users.resolver'
+import { UsersService } from '@/modules/users/users.service'
 
-jest.mock('./users.service')
+jest.mock('@/modules/users/users.service')
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver

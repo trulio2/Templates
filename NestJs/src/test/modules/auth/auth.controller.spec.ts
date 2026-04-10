@@ -1,10 +1,10 @@
 import { UnauthorizedException } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { mockCreateUserDto, mockSignInDto, mockToken } from '@/mocks'
-import { AuthController } from './auth.controller'
-import { AuthService } from './auth.service'
+import { mockCreateUserDto, mockSignInDto, mockToken } from '@/test/mocks'
+import { AuthController } from '@/modules/auth/auth.controller'
+import { AuthService } from '@/modules/auth/auth.service'
 
-jest.mock('./auth.service')
+jest.mock('@/modules/auth/auth.service')
 
 describe('AuthController', () => {
   let controller: AuthController
