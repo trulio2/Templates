@@ -1,0 +1,36 @@
+groups:
+  - name: nestjs-observability
+    rules:
+      - alert: NestJsHighErrorRate
+        expr: |
+          sum(rate(app_request_duration_ms_count{outcome="error"}[5m]))
+          /
+          sum(rate(app_request_duration_ms_count[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: NestJS request error rate is high
+          description: More than 5% of observed requests are failing over the last 5 minutes.
+
+      - alert: NestJsHighLatencyP95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(app_request_duration_ms_bucket[5m])) by (le)
+          ) > 500
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: NestJS request latency is high
+          description: 95th percentile request duration has exceeded 500ms for 10 minutes.
+
+      - alert: NestJsCollectorDown
+        expr: up{job="otel-collector"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: OTEL collector is down
+          description: Prometheus cannot scrape the OpenTelemetry collector.

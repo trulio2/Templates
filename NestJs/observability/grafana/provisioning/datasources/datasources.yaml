@@ -1,0 +1,24 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    uid: Prometheus
+    url: ${GRAFANA_PROMETHEUS_URL}
+    isDefault: true
+    editable: true
+
+  - name: Loki
+    type: loki
+    access: proxy
+    uid: Loki
+    url: ${GRAFANA_LOKI_URL}
+    editable: true
+
+  - name: Tempo
+    type: tempo
+    access: proxy
+    uid: Tempo
+    url: ${GRAFANA_TEMPO_URL}
+    editable: true

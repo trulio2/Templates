@@ -1,0 +1,133 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-nest-db}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-nest-db}'
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.121.0
+    command: ['--config=/etc/otelcol-contrib/config.yaml']
+    depends_on:
+      - tempo
+      - loki
+    ports:
+      - '4317:4317'
+      - '4318:4318'
+      - '8889:8889'
+    volumes:
+      - ./observability/otel-collector.yaml:/etc/otelcol-contrib/config.yaml:ro
+
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    command:
+      [
+        '--config.file=/etc/prometheus/prometheus.yml',
+        '--storage.tsdb.path=/prometheus'
+      ]
+    depends_on:
+      - otel-collector
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./observability/prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus-data:/prometheus
+
+  loki:
+    image: grafana/loki:3.4.2
+    command: ['-config.file=/etc/loki/config.yaml']
+    ports:
+      - '3100:3100'
+    volumes:
+      - ./observability/loki-config.yaml:/etc/loki/config.yaml:ro
+      - loki-data:/loki
+
+  tempo:
+    image: grafana/tempo:2.7.1
+    command: ['-config.file=/etc/tempo/config.yaml']
+    ports:
+      - '3200:3200'
+      - '4319:4317'
+    volumes:
+      - ./observability/tempo.yaml:/etc/tempo/config.yaml:ro
+      - tempo-data:/var/tempo
+
+  promtail:
+    image: grafana/promtail:3.4.2
+    command: ['-config.file=/etc/promtail/config.yaml']
+    depends_on:
+      - loki
+    volumes:
+      - ./observability/promtail-config.yaml:/etc/promtail/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  grafana:
+    image: grafana/grafana:11.5.1
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GRAFANA_PROMETHEUS_URL: ${GRAFANA_PROMETHEUS_URL:-http://prometheus:9090}
+      GRAFANA_LOKI_URL: ${GRAFANA_LOKI_URL:-http://loki:3100}
+      GRAFANA_TEMPO_URL: ${GRAFANA_TEMPO_URL:-http://tempo:3200}
+    ports:
+      - '3001:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+
+  backend:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "corepack enable && yarn dev"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      otel-collector:
+        condition: service_started
+    environment:
+      DB_DATABASE: ${DB_DATABASE:-nest-db}
+      DB_HOST: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-jwt-secret}
+      NODE_ENV: development
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${BACKEND_OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+      OTEL_EXPORTER_OTLP_HEADERS: ''
+      OTEL_SERVICE_NAME: nest-js
+      PORT: 3000
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - yarn-cache:/usr/local/share/.cache/yarn
+
+volumes:
+  grafana-data:
+  loki-data:
+  postgres-data:
+  prometheus-data:
+  tempo-data:
+  yarn-cache:
