@@ -41,9 +41,15 @@ async function bootstrap() {
     await observability?.shutdown()
   }
 
-  process.once('SIGINT', shutdown)
-  process.once('SIGTERM', shutdown)
-  process.once('SIGUSR2', shutdown)
+  const exitOnSignal = (signal: NodeJS.Signals) => {
+    void shutdown().finally(() => {
+      process.exit(0)
+    })
+  }
+
+  process.once('SIGINT', exitOnSignal)
+  process.once('SIGTERM', exitOnSignal)
+  process.once('SIGUSR2', exitOnSignal)
 
   logger.verbose(`Application is running on port ${port}`)
 }
