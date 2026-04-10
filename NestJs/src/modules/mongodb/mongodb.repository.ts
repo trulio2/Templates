@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+import { InjectConnection, InjectModel } from '@nestjs/mongoose'
+import { Connection, Model } from 'mongoose'
 import { CreateMongoDbRecordDto } from './create-mongodb-record.dto'
 import { MongoDbRecord, MongoDbRecordDocument } from './mongodb-record.schema'
 
 @Injectable()
 export class MongoDbRepository {
   constructor(
+    @InjectConnection()
+    private readonly connection: Connection,
     @InjectModel(MongoDbRecord.name)
     private readonly mongoDbRecordModel: Model<MongoDbRecordDocument>
   ) {}
@@ -21,10 +23,11 @@ export class MongoDbRepository {
 
   async checkHealth() {
     try {
-      const nativeDb = this.mongoDbRecordModel.db.db
+      const nativeDb = this.connection.db
 
       if (!nativeDb) {
         return {
+          readyState: this.connection.readyState,
           status: 'down'
         }
       }
@@ -32,6 +35,7 @@ export class MongoDbRepository {
       await nativeDb.admin().command({ ping: 1 })
 
       return {
+        readyState: this.connection.readyState,
         status: 'up'
       }
     } catch (error) {

@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import mongoose from 'mongoose'
+import { InjectConnection } from '@nestjs/mongoose'
+import { Connection } from 'mongoose'
 import { DataSource } from 'typeorm'
 import { dataSourceOptions } from '@/db/data-source'
 
 @Injectable()
 export class HealthRepository {
+  constructor(@InjectConnection() private readonly connection: Connection) {}
+
   async checkDatabase() {
     const dataSource = new DataSource(dataSourceOptions)
 
@@ -31,10 +34,10 @@ export class HealthRepository {
 
   async checkMongoDb() {
     try {
-      const connection = mongoose.connection
+      const connection = this.connection
       const db = connection.db
 
-      if (connection.readyState !== 1 || !db) {
+      if (!db) {
         return {
           database: connection.name,
           readyState: connection.readyState,
